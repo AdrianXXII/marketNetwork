@@ -12,7 +12,7 @@ import java.util.Date;
  * application this could for example be a JPA entity.
  */
 @SuppressWarnings("serial")
-public class Customer implements Serializable, Cloneable {
+public class Member implements Serializable, Cloneable {
 
     private Long id;
 
@@ -36,7 +36,7 @@ public class Customer implements Serializable, Cloneable {
 
     private Integer abo_id;
 
-    private CustomerType type;
+    private MemberType type;
 
     public Long getId() {
         return id;
@@ -189,11 +189,11 @@ public class Customer implements Serializable, Cloneable {
         this.abo_id = abo_id;
     }
 
-    public CustomerType getType() {
+    public MemberType getType() {
         return type;
     }
 
-    public void setType(CustomerType type) {
+    public void setType(MemberType type) {
         this.type = type;
     }
 
@@ -211,8 +211,8 @@ public class Customer implements Serializable, Cloneable {
             return false;
         }
 
-        if (obj instanceof Customer && obj.getClass().equals(getClass())) {
-            return this.id.equals(((Customer) obj).id);
+        if (obj instanceof Member && obj.getClass().equals(getClass())) {
+            return this.id.equals(((Member) obj).id);
         }
 
         return false;
@@ -226,8 +226,8 @@ public class Customer implements Serializable, Cloneable {
     }
 
     @Override
-    public Customer clone() throws CloneNotSupportedException {
-        return (Customer) super.clone();
+    public Member clone() throws CloneNotSupportedException {
+        return (Member) super.clone();
     }
 
     @Override

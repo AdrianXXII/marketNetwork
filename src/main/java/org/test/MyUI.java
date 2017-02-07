@@ -23,12 +23,12 @@ import java.util.List;
 @Theme("mytheme")
 public class MyUI extends UI {
 
-    private CustomerService service = CustomerService.getInstance();
+    private MemberService service = MemberService.getInstance();
     private Grid grid = new Grid();
     private Label titleLable = new Label("Adressverwaltung");
     private TextField filterText = new TextField();
     private Button clearFilterTextBtn = new Button(FontAwesome.TIMES);
-    private CustomerForm form = new CustomerForm(this);
+    private MemberForm form = new MemberForm(this);
 
     @Override
     protected void init(VaadinRequest vaadinRequest) {
@@ -36,7 +36,7 @@ public class MyUI extends UI {
 
         filterText.setInputPrompt("Nach Namen filtern");
         filterText.addTextChangeListener(e -> {
-            grid.setContainerDataSource(new BeanItemContainer<>(Customer.class,
+            grid.setContainerDataSource(new BeanItemContainer<>(Member.class,
                     service.findAll(e.getText())));
         });
 
@@ -53,13 +53,13 @@ public class MyUI extends UI {
         filtering.setStyleName(ValoTheme.LAYOUT_COMPONENT_GROUP);
         filtering.addComponents(filterText, clearFilterTextBtn);
 
-        Button addCustomerBtn = new Button("Neuen Kunden erstellen");
-        addCustomerBtn.addClickListener(e -> {
+        Button addMemberBtn = new Button("Neuen Kunden erstellen");
+        addMemberBtn.addClickListener(e -> {
             grid.select(null);
-            form.setCustomer(new Customer());
+            form.setMember(new Member());
         });
 
-        HorizontalLayout toolbar = new HorizontalLayout(filtering, addCustomerBtn);
+        HorizontalLayout toolbar = new HorizontalLayout(filtering, addMemberBtn);
         toolbar.setSpacing(true);
 
         grid.setColumns("firstName", "lastName", "email", "type");
@@ -89,15 +89,15 @@ public class MyUI extends UI {
                 form.setVisible(false);
             }
             else{
-                Customer customer = (Customer) event.getSelected().iterator().next();
-                form.setCustomer(customer);
+                Member member = (Member) event.getSelected().iterator().next();
+                form.setMember(member);
             }
         });
     }
 
     public void updateList(){
-        List<Customer> customers = service.findAll();
-        grid.setContainerDataSource(new BeanItemContainer<>(Customer.class, customers));
+        List<Member> members = service.findAll();
+        grid.setContainerDataSource(new BeanItemContainer<>(Member.class, members));
     }
 
     @WebServlet(urlPatterns = "/*", name = "MyUIServlet", asyncSupported = true)

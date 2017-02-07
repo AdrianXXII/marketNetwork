@@ -19,48 +19,48 @@ import java.util.logging.Logger;
  * this class would be replaced by e.g. EJB or a Spring based service class.
  * <p>
  * In demos/tutorials/examples, get a reference to this service class with
- * {@link CustomerService#getInstance()}.
+ * {@link MemberService#getInstance()}.
  */
-public class CustomerService {
+public class MemberService {
 
-    private static CustomerService instance;
-    private static final Logger LOGGER = Logger.getLogger(CustomerService.class.getName());
+    private static MemberService instance;
+    private static final Logger LOGGER = Logger.getLogger(MemberService.class.getName());
 
-    private final HashMap<Long, Customer> contacts = new HashMap<>();
+    private final HashMap<Long, Member> contacts = new HashMap<>();
     private long nextId = 0;
 
-    private CustomerService() {
+    private MemberService() {
     }
 
     /**
-     * @return a reference to an example facade for Customer objects.
+     * @return a reference to an example facade for Member objects.
      */
-    public static CustomerService getInstance() {
+    public static MemberService getInstance() {
         if (instance == null) {
-            instance = new CustomerService();
+            instance = new MemberService();
             instance.ensureTestData();
         }
         return instance;
     }
 
     /**
-     * @return all available Customer objects.
+     * @return all available Member objects.
      */
-    public synchronized List<Customer> findAll() {
+    public synchronized List<Member> findAll() {
         return findAll(null);
     }
 
     /**
-     * Finds all Customer's that match given filter.
+     * Finds all Member's that match given filter.
      *
      * @param stringFilter
      *            filter that returned objects should match or null/empty string
      *            if all objects should be returned.
-     * @return list a Customer objects
+     * @return list a Member objects
      */
-    public synchronized List<Customer> findAll(String stringFilter) {
-        ArrayList<Customer> arrayList = new ArrayList<>();
-        for (Customer contact : contacts.values()) {
+    public synchronized List<Member> findAll(String stringFilter) {
+        ArrayList<Member> arrayList = new ArrayList<>();
+        for (Member contact : contacts.values()) {
             try {
                 boolean passesFilter = (stringFilter == null || stringFilter.isEmpty())
                         || contact.toString().toLowerCase().contains(stringFilter.toLowerCase());
@@ -68,13 +68,13 @@ public class CustomerService {
                     arrayList.add(contact.clone());
                 }
             } catch (CloneNotSupportedException ex) {
-                Logger.getLogger(CustomerService.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(MemberService.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
-        Collections.sort(arrayList, new Comparator<Customer>() {
+        Collections.sort(arrayList, new Comparator<Member>() {
 
             @Override
-            public int compare(Customer o1, Customer o2) {
+            public int compare(Member o1, Member o2) {
                 return (int) (o2.getId() - o1.getId());
             }
         });
@@ -82,7 +82,7 @@ public class CustomerService {
     }
 
     /**
-     * Finds all Customer's that match given filter and limits the resultset.
+     * Finds all Member's that match given filter and limits the resultset.
      *
      * @param stringFilter
      *            filter that returned objects should match or null/empty string
@@ -91,11 +91,11 @@ public class CustomerService {
      *            the index of first result
      * @param maxresults
      *            maximum result count
-     * @return list a Customer objects
+     * @return list a Member objects
      */
-    public synchronized List<Customer> findAll(String stringFilter, int start, int maxresults) {
-        ArrayList<Customer> arrayList = new ArrayList<>();
-        for (Customer contact : contacts.values()) {
+    public synchronized List<Member> findAll(String stringFilter, int start, int maxresults) {
+        ArrayList<Member> arrayList = new ArrayList<>();
+        for (Member contact : contacts.values()) {
             try {
                 boolean passesFilter = (stringFilter == null || stringFilter.isEmpty())
                         || contact.toString().toLowerCase().contains(stringFilter.toLowerCase());
@@ -103,13 +103,13 @@ public class CustomerService {
                     arrayList.add(contact.clone());
                 }
             } catch (CloneNotSupportedException ex) {
-                Logger.getLogger(CustomerService.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(MemberService.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
-        Collections.sort(arrayList, new Comparator<Customer>() {
+        Collections.sort(arrayList, new Comparator<Member>() {
 
             @Override
-            public int compare(Customer o1, Customer o2) {
+            public int compare(Member o1, Member o2) {
                 return (int) (o2.getId() - o1.getId());
             }
         });
@@ -131,29 +131,29 @@ public class CustomerService {
      * Deletes a customer from a system
      *
      * @param value
-     *            the Customer to be deleted
+     *            the Member to be deleted
      */
-    public synchronized void delete(Customer value) {
+    public synchronized void delete(Member value) {
         contacts.remove(value.getId());
     }
 
     /**
      * Persists or updates customer in the system. Also assigns an identifier
-     * for new Customer instances.
+     * for new Member instances.
      *
      * @param entry
      */
-    public synchronized void save(Customer entry) {
+    public synchronized void save(Member entry) {
         if (entry == null) {
             LOGGER.log(Level.SEVERE,
-                    "Customer is null. Are you sure you have connected your form to the application as described in tutorial chapter 7?");
+                    "Member is null. Are you sure you have connected your form to the application as described in tutorial chapter 7?");
             return;
         }
         if (entry.getId() == null) {
             entry.setId(nextId++);
         }
         try {
-            entry = (Customer) entry.clone();
+            entry = (Member) entry.clone();
         } catch (Exception ex) {
             throw new RuntimeException(ex);
         }
@@ -175,11 +175,11 @@ public class CustomerService {
             Random r = new Random(0);
             for (String name : names) {
                 String[] split = name.split(" ");
-                Customer c = new Customer();
+                Member c = new Member();
                 c.setFirstName(split[0]);
                 c.setLastName(split[1]);
                 c.setEmail(split[0].toLowerCase() + "@" + split[1].toLowerCase() + ".com");
-                c.setType(CustomerType.values()[r.nextInt(CustomerType.values().length)]);
+                c.setType(MemberType.values()[r.nextInt(MemberType.values().length)]);
                 Calendar cal = Calendar.getInstance();
                 int daysOld = 0 - r.nextInt(365 * 15 + 365 * 60);
                 cal.add(Calendar.DAY_OF_MONTH, daysOld);
