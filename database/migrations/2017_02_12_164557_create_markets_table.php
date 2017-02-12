@@ -15,7 +15,13 @@ class CreateMarketsTable extends Migration
     {
         Schema::create('markets', function (Blueprint $table) {
             $table->increments('id');
-            $table->timestamps();
+            $table->integer("location_id")->unsigned();
+            $table->string("name", 30);
+            $table->timestamp("start_date");
+            $table->timestamp("end_date");
+            $table->timestamp("available");
+
+            $table->foreign('location_id')->references('id')->on('locations');
         });
     }
 
@@ -26,6 +32,9 @@ class CreateMarketsTable extends Migration
      */
     public function down()
     {
+        Schema::table('markets', function($table){
+            $table->dropForeign(['location_id']);
+        });
         Schema::dropIfExists('markets');
     }
 }

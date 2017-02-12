@@ -18,12 +18,16 @@ class CreateMembersTable extends Migration
             $table->string('name', 30);
             $table->string('firstname', 30);
             $table->string('street', 50);
-            $table->string('zip', 30);
-            $table->string('tel', 15);
-            $table->boolean('ventor');
-            $table->boolean('trialperiode');
-            $table->timestamp('abo_start');
-            $table->timestamp('abo_id');
+            $table->string('city', 30);
+            $table->string('zip', 10);
+            $table->string('email', 50);
+            $table->string('tel', 15)->nullable();
+            $table->boolean('ventor')->default(false);
+            $table->boolean('trialperiode')->nullable();
+            $table->timestamp('abo_start')->nullable();
+            $table->timestamp('abo_id')->nullable();
+
+            $table->foreign('abo_id')->references('id')->on('abos');
         });
     }
 
@@ -34,6 +38,9 @@ class CreateMembersTable extends Migration
      */
     public function down()
     {
+        Schema::table('members', function($table){
+            $table->dropForeign(['abo_id']);
+        });
         Schema::dropIfExists('members');
     }
 }

@@ -15,7 +15,11 @@ class CreateVisasTable extends Migration
     {
         Schema::create('visas', function (Blueprint $table) {
             $table->increments('id');
-            $table->timestamps();
+            $table->string('title', 30);
+            $table->boolean('approved')->default(false);
+            $table->text('discribe');
+            $table->foreign('member_id')->references('id')->on('members');
+
         });
     }
 
@@ -26,6 +30,9 @@ class CreateVisasTable extends Migration
      */
     public function down()
     {
+        Schema::table('visas', function($table){
+            $table->dropForeign(['market_id']);
+        });
         Schema::dropIfExists('visas');
     }
 }
