@@ -18,6 +18,8 @@ class CreateVisasTable extends Migration
             $table->string('title', 30);
             $table->boolean('approved')->default(false);
             $table->text('discribe');
+            $table->integer('member_id')->unsigned();
+
             $table->foreign('member_id')->references('id')->on('members');
 
         });

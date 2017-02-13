@@ -22,10 +22,10 @@ class CreateMembersTable extends Migration
             $table->string('zip', 10);
             $table->string('email', 50);
             $table->string('tel', 15)->nullable();
-            $table->boolean('ventor')->default(false);
+            $table->boolean('vendor')->default(false);
             $table->boolean('trialperiode')->nullable();
             $table->timestamp('abo_start')->nullable();
-            $table->timestamp('abo_id')->nullable();
+            $table->integer('abo_id', false, true)->nullable();
 
             $table->foreign('abo_id')->references('id')->on('abos');
         });
