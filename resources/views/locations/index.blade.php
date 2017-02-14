@@ -5,23 +5,23 @@
         <div class="row">
             <div class="col-md-12">
                 <div class="panel panel-default">
-                    <div class="panel-heading">Adressen</div>
+                    <div class="panel-heading">Standorte</div>
                     <div class="panel-body">
                         <div class="row">
                             <div class="col-lg-6 col-sm-10">
-                                    <form action="{{ route('member.index') }}" method="get">
-                                        <div class="input-group">
-                                            <input type="text" class="form-control" name="search" placeholder="Suche nach...">
+                                <form action="{{ route('location.index') }}" method="get">
+                                    <div class="input-group">
+                                        <input type="text" class="form-control" name="search" placeholder="Suche nach...">
                                             <span class="input-group-btn">
                                                 <button class="btn btn-default" aria-hidden="true" type="submit">
                                                     <span class="glyphicon glyphicon-search" aria-hidden="true"></span>
                                                 </button>
                                             </span>
-                                        </div>
-                                    </form>
+                                    </div>
+                                </form>
                             </div>
                             <div class="col-lg-2 col-sm-2">
-                                <a href="{{ route('member.create') }}" class="btn btn-primary">
+                                <a href="{{ route('location.create') }}" class="btn btn-primary">
                                     <span class="glyphicon glyphicon-plus" aria-hidden="true"></span> New
                                 </a>
                             </div>
@@ -30,7 +30,7 @@
                             <div class="row">
                                 <div class="col-lg-6 col-sm-10">
                                     <p>
-                                       Suche nach: {{ $search }}
+                                        Suche nach: {{ $search }}
                                     </p>
                                 </div>
                             </div>
@@ -38,26 +38,20 @@
                         <br/>
                         <table class="table table-striped">
                             <thead>
-                                <tr>
-                                    <th>Name</th>
-                                    <th>Vorname</th>
-                                    <th>Strasse</th>
-                                    <th>Ortschaft</th>
-                                    <th>Tel</th>
-                                    <th>Email</th>
-                                </tr>
+                            <tr>
+                                <th>Name</th>
+                                <th>Strasse</th>
+                                <th>Ortschaft</th>
+                            </tr>
                             </thead>
                             <tbody>
-                                @foreach($members as $member)
-                                    <tr class="clickable-row" data-href='{{ route('member.edit', ['id' => $member->id ]) }}'>
-                                        <td>{{ $member->name }}</td>
-                                        <td>{{ $member->firstname }}</td>
-                                        <td>{{ $member->street }}</td>
-                                        <td>{{ $member->zip . " " . $member->city }}</td>
-                                        <td>{{ $member->tel }}</td>
-                                        <td>{{ $member->email }}</td>
-                                    </tr>
-                                @endforeach
+                            @foreach($locations as $location)
+                                <tr class="clickable-row" data-href='{{ route('location.edit', ['id' => $location->id ]) }}'>
+                                    <td>{{ $location->name }}</td>
+                                    <td>{{ $location->street }}</td>
+                                    <td>{{ $location->zip . " " . $location->city }}</td>
+                                </tr>
+                            @endforeach
                             </tbody>
                         </table>
                     </div>

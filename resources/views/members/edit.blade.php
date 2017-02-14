@@ -104,7 +104,7 @@
                         <div class="form-group{{ $errors->has('vendor') ? ' has-error' : '' }}">
                             <label for="vendor" class="col-md-4 control-label">Verkäufer</label>
                             <div class="col-md-6">
-                                <input id="vendor" type="checkbox" class="form-control" name="vendor" value="{{ old('vendor', $member->vendor) }}">
+                                <input id="vendor" type="checkbox" class="form-control" {{  old('vendor', $member->vendor) == 1 ? 'checked' : '' }} name="vendor" value="1">
 
                                 @if ($errors->has('vendor'))
                                     <span class="help-block">
@@ -130,12 +130,25 @@
                         <div class="form-group">
                             <div class="col-md-6 col-md-offset-4">
                                 <button type="submit" class="btn btn-primary">
-                                    Create
+                                    <span class="glyphicon glyphicon-floppy-disk" aria-hidden="true"></span> Speichern
                                 </button>
+                                <a href="{{ route('member.index') }}" class="btn btn-default">
+                                    <span class="glyphicon glyphicon-arrow-left" aria-hidden="true"></span> Abbrechen
+                                </a>
                             </div>
                         </div>
 
                     </form>
+                    <hr/>
+                    <div class="center-block">
+                        <form method="post" action="{{ route('member.delete', ['id' => $member->id]) }}">
+                            {{ csrf_field() }}
+                            <input type="hidden" name="_method" value="DELETE">
+                            <button type="submit" class="btn btn-danger center-block">
+                                <span class="glyphicon glyphicon-trash" aria-hidden="true"></span> Löschen
+                            </button>
+                        </form>
+                    </div>
                 </div>
             </div>
         </div>

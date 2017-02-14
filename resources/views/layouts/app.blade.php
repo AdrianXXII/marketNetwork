@@ -43,7 +43,8 @@
                 <div class="collapse navbar-collapse" id="app-navbar-collapse">
                     <!-- Left Side Of Navbar -->
                     <ul class="nav navbar-nav">
-                        <li><a href="{{ url('/address') }}">Adressen</a></li>
+                        <li><a href="{{ route('member.index') }}">Adressen</a></li>
+                        <li><a href="{{ route('location.index') }}">Standörte</a></li>
                     </ul>
 
                     <!-- Right Side Of Navbar -->
