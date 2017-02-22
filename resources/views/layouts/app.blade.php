@@ -45,6 +45,7 @@
                     <ul class="nav navbar-nav">
                         <li><a href="{{ route('member.index') }}">Adressen</a></li>
                         <li><a href="{{ route('location.index') }}">Standörte</a></li>
+                        <li><a href="{{ route('deployment.index') }}">Einsätze</a></li>
                     </ul>
 
                     <!-- Right Side Of Navbar -->

@@ -127,6 +127,24 @@
                             </div>
                         </div>
 
+                        <div class="form-group{{ $errors->has('abo') ? ' has-error' : '' }}">
+                            <label for="abo" class="col-md-4 control-label">Abos</label>
+                            <div class="col-md-6">
+
+                                <select name="abo" id="abo">
+                                    @foreach($abos as $abo)
+                                        <option {{ $abo->id == old('abo', $this->abo_id) ? 'selected' : '' }} value="{{ $abo->id }}">{{ $abo->name }}</option>
+                                    @endforeach
+                                </select>
+
+                                @if ($errors->has('trialperiode'))
+                                    <span class="help-block">
+                                        <strong>{{ $errors->first('trialperiode') }}</strong>
+                                    </span>
+                                @endif
+                            </div>
+                        </div>
+
                         <div class="form-group">
                             <div class="col-md-6 col-md-offset-4">
                                 <button type="submit" class="btn btn-primary">
@@ -139,6 +157,10 @@
                         </div>
 
                     </form>
+                    <hr/>
+                    <h2>Visa</h2>
+                    <hr/>
+                    <h2>Location</h2>
                     <hr/>
                     <div class="center-block">
                         <form method="post" action="{{ route('member.delete', ['id' => $member->id]) }}">

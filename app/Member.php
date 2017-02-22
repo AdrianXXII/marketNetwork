@@ -17,4 +17,12 @@ class Member extends Model
     public function abos(){
         $this->belongsTo('App\Abos', 'abo_id');
     }
+
+    public function locations(){
+        $this->belongsToMany('App\LocationMember', 'member_id');
+    }
+
+    public function markets(){
+        $this->belongsToMany('App\MarketMember', 'member_id');
+    }
 }

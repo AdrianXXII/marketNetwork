@@ -114,19 +114,6 @@
                             </div>
                         </div>
 
-                        <div class="form-group{{ $errors->has('trialperiode') ? ' has-error' : '' }}">
-                            <label for="trialperiode" class="col-md-4 control-label">Probezeit</label>
-                            <div class="col-md-6">
-                                <input id="trialperiode" type="checkbox" class="form-control" name="trialperiode" value="{{ old('trialperiode') }}">
-
-                                @if ($errors->has('trialperiode'))
-                                    <span class="help-block">
-                                        <strong>{{ $errors->first('trialperiode') }}</strong>
-                                    </span>
-                                @endif
-                            </div>
-                        </div>
-
                         <div class="form-group">
                             <div class="col-md-6 col-md-offset-4">
                                 <button type="submit" class="btn btn-primary">

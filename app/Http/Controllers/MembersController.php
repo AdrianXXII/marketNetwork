@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Abo;
 use App\Member;
 
 use Illuminate\Http\Request;
@@ -43,7 +44,7 @@ class MembersController extends Controller
     public function create()
     {
         $member = new Member();
-        return view('members.create', compact('member'));
+        return view('members.create', compact('member', 'abos'));
     }
 
     /**
@@ -54,7 +55,20 @@ class MembersController extends Controller
      */
     public function store(Request $request)
     {
-        $member = new \App\Member($request->all());
+        $member = new \App\Member();
+
+        $member->name           = $request->get('name');
+        $member->firstname      = $request->get('firstname');
+        $member->email          = $request->get('email');
+        $member->street         = $request->get('street');
+        $member->zip            = $request->get('zip');
+        $member->city           = $request->get('city');
+        $member->tel            = $request->get('tel');
+
+        $member->vendor         = $request->get('vendor') == null ? 0 : $request->get('vendor');
+        if( $member->vendor ){
+            $member->trialperiode   = true;
+        }
         $member->save();
         return redirect(route('member.index'));
     }
@@ -79,7 +93,8 @@ class MembersController extends Controller
     public function edit($id)
     {
         $member = Member::find($id);
-        return view('members.edit', compact('member'));
+        $abos = Abo::orderBy('name')->get();
+        return view('members.edit', compact('member', 'abos'));
     }
 
     /**

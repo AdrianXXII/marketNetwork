@@ -31,6 +31,14 @@ Route::group(['middleware' => 'auth'], function() {
     Route::put('/location/{id}', 'LocationController@update')->name('location.update');
     Route::get('/location/{id}/edit', 'LocationController@edit')->name('location.edit');
 
+
+    Route::get('/deployment', 'DeploymentController@index')->name('deployment.index');
+    Route::get('/deployment/create', 'DeploymentController@create')->name('deployment.create');
+    Route::post('/deployment', 'DeploymentController@store')->name('deployment.save');
+    Route::delete('/deployment/{id}', 'DeploymentController@destroy')->name('deployment.delete');
+    Route::put('/deployment/{id}', 'DeploymentController@update')->name('deployment.update');
+    Route::get('/deployment/{id}/edit', 'DeploymentController@edit')->name('deployment.edit');
+
 });
 
 Auth::routes();
