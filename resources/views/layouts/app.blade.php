@@ -3,6 +3,7 @@
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="_token" content="{{ csrf_token() }}">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <!-- CSRF Token -->
@@ -86,8 +87,100 @@
     <script src="/js/app.js"></script>
     <script>
         jQuery(document).ready(function($) {
+            $.ajaxSetup({
+                headers: {
+                    'X-CSRF-Token': $('meta[name="_token"]').attr('content')
+                }
+            });
+
             $(".clickable-row").click(function() {
                 window.document.location = $(this).data("href");
+            });
+
+            $('[name="vendor"].member-vendor').click(function(){
+                $('.vendor-only').toggleClass('hidden');
+                console.log('test');
+            });
+
+            $('#visas tbody').on('click', '.visa_save', function(){
+                var tr = $(this).parents('tr');
+                var dHref = tr.data("href");
+                var visa = {};
+                visa.id = tr.find('.visa_id').prop('value');
+                visa.title = tr.find('.visa_title').prop('value');
+                visa.discribe = tr.find('.visa_discribe').val();
+                visa.approved = tr.find('.visa_approved').prop('checked') == true ? 1 : 0;
+                $.ajax({
+                    url: dHref,
+                    method: 'PUT',
+                    data: visa,
+                    success: function(data, textStatus, jqXHR){
+                        console.log(data);
+                        tr.find('.visa_id').prop('value', data.id);
+                        tr.find('.visa_title').prop('value', data.title);
+                        tr.find('.visa_discribe').val(data.discribe);
+                        var checked = data.approved == 1 ? true : false;
+                        tr.find('.visa_approved').prop('checked', checked);
+                    },
+                    error: function(jqXHR,textStatus){
+                        console.log(jqXHR.responseText);
+                        console.log(textStatus);
+                    }
+                });
+            });
+
+            $('.visa_create').click(function(){
+                var dHref = $(this).data("href");
+                var lastTr = $('#visas tbody tr').last();
+                $.ajax({
+                    url: dHref,
+                    method: 'POST',
+                    success: function(data, textStatus, jqXHR){
+                        if($('#visas tbody tr').length == 0){
+                            console.log('has none');
+                            $('#visas tbody').html("<tr data-href='"+ dHref + "/" + data.id + "'>" +
+                                    "<td><input class='visa_id' type='hidden' name='visa_id' value='"+data.id + "'><input class='visa_title form-control' type='text' name='visa_title' value='"+data.title+"'></td>" +
+                                    "<td><textarea class='visa_discribe form-control' name='visa_discribe'>" + data.discribe + "</textarea></td>" +
+                                    "<td><input type='checkbox' class='visa_approved form-control' name='visa_approved' " + (data.approved == 1 ? 'checked' : '') + " value='1'></td>" +
+                                    "<td><button type='button' class='btn btn-default visa_save'><span class='glyphicon glyphicon-floppy-disk' aria-hidden='true'></span></button>" +
+                                    "<button type='button' class='btn btn-danger visa_delete'><span class='glyphicon glyphicon-trash' aria-hidden='true'></span></button></td></tr>");
+                        } else {
+                            var trHref = lastTr.data("href");
+                            var tr = lastTr.clone();
+                            trHref = trHref.substring(0, trHref.lastIndexOf('/')+1) + data.id;
+                            tr.find('.visa_id').prop('value', data.id);
+                            tr.find('.visa_title').prop('value', '');
+                            tr.find('.visa_discribe').val('');
+                            tr.find('.visa_approved').prop('checked', false);
+                            tr.prop("data-href", trHref);
+                            lastTr.after(tr);
+                            $('#visas tbody tr').last().data('href', trHref);
+                        }
+                    },
+                    error: function(jqXHR,textStatus){
+                        console.log(jqXHR.responseText);
+                        console.log(textStatus);
+                    }
+                });
+            });
+
+            $('#visas tbody').on('click', '.visa_delete', function(){
+                var tr = $(this).parents('tr');
+                var dHref = tr.data("href");
+                var visa = {};
+                visa.id = tr.find('.visa_id').prop('value');
+                $.ajax({
+                    url: dHref,
+                    method: 'DELETE',
+                    success: function(data, textStatus, jqXHR){
+                        console.log(data);
+                        tr.remove();
+                    },
+                    error: function(jqXHR,textStatus){
+                        console.log(jqXHR.responseText);
+                        console.log(textStatus);
+                    }
+                });
             });
         });
     </script>

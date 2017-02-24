@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Abo;
 use App\Member;
 
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Input;
 
@@ -118,9 +119,17 @@ class MembersController extends Controller
 
         $member->vendor         = $request->get('vendor') == null ? 0 : $request->get('vendor');
         $member->trialperiode   = $request->get('trialperiode') == null ? 0 : $request->get('trialperiode');
+        if( $member->vendor && $member->abo_id != $request->get('abo') ){
+            $member->abo_id  = $request->get('abo');
+            $member->abo_start = new Carbon();
+        }
         $member->save();
 
-        return redirect(route('member.index'));
+        if($request->get("save") == 'ok') {
+            return redirect(route('member.index'));
+        } else {
+            return redirect(route('member.edit', ['id' => $id]));
+        }
     }
 
     /**

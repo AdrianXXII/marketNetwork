@@ -14,10 +14,14 @@ class Member extends Model
 
     protected $fillable = array('name', 'firstname', 'street', 'zip', 'city', 'tel', 'email', 'vendor', 'trialperiode', 'abo_start', 'abo_id');
 
-    public function abos(){
-        $this->belongsTo('App\Abos', 'abo_id');
+    public function abo(){
+        return $this->belongsTo('App\Abo', 'abo_id');
     }
 
+    public function visas(){
+        return $this->hasMany('App\Visa');
+    }
+/*
     public function locations(){
         $this->belongsToMany('App\LocationMember', 'member_id');
     }
@@ -25,4 +29,5 @@ class Member extends Model
     public function markets(){
         $this->belongsToMany('App\MarketMember', 'member_id');
     }
+*/
 }

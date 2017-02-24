@@ -14,4 +14,8 @@ class Location extends Model
 
     protected $fillable = array('name', 'street', 'zip', 'city', 'member_max');
 
+    public function markets(){
+        return $this->hasMany('App\Market');
+    }
+
 }

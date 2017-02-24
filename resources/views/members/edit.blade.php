@@ -104,7 +104,7 @@
                         <div class="form-group{{ $errors->has('vendor') ? ' has-error' : '' }}">
                             <label for="vendor" class="col-md-4 control-label">Verkäufer</label>
                             <div class="col-md-6">
-                                <input id="vendor" type="checkbox" class="form-control" {{  old('vendor', $member->vendor) == 1 ? 'checked' : '' }} name="vendor" value="1">
+                                <input id="vendor" type="checkbox" class="form-control member-vendor" {{  old('vendor', $member->vendor) == 1 ? 'checked' : '' }} name="vendor" value="1">
 
                                 @if ($errors->has('vendor'))
                                     <span class="help-block">
@@ -117,7 +117,7 @@
                         <div class="form-group{{ $errors->has('trialperiode') ? ' has-error' : '' }}">
                             <label for="trialperiode" class="col-md-4 control-label">Probezeit</label>
                             <div class="col-md-6">
-                                <input id="trialperiode" type="checkbox" class="form-control" name="trialperiode" value="{{ old('trialperiode', $member->trialperiode) }}">
+                                <input id="trialperiode" type="checkbox" class="form-control" name="trialperiode"  {{  old('trialperiode', $member->trialperiode) == 1 ? 'checked' : '' }} value="1">
 
                                 @if ($errors->has('trialperiode'))
                                     <span class="help-block">
@@ -127,13 +127,13 @@
                             </div>
                         </div>
 
-                        <div class="form-group{{ $errors->has('abo') ? ' has-error' : '' }}">
-                            <label for="abo" class="col-md-4 control-label">Abos</label>
+                        <div class="form-group vendor-only{{ $errors->has('abo') ? ' has-error' : '' }}{{ old('vendor', $member->vendor) != 1 ? ' hidden' : '' }}">
+                            <label for="abo" class="col-md-4 control-label">Abo</label>
                             <div class="col-md-6">
 
-                                <select name="abo" id="abo">
+                                <select name="abo" id="abo" class="form-control">
                                     @foreach($abos as $abo)
-                                        <option {{ $abo->id == old('abo', $this->abo_id) ? 'selected' : '' }} value="{{ $abo->id }}">{{ $abo->name }}</option>
+                                        <option {{ $abo->id == old('abo', $member->abo_id) ? 'selected' : '' }} value="{{ $abo->id }}">{{ $abo->name }}</option>
                                     @endforeach
                                 </select>
 
@@ -145,9 +145,19 @@
                             </div>
                         </div>
 
+                        <div class="form-group vendor-only{{ $errors->has('abo_start') ? ' has-error' : '' }}{{ old('vendor', $member->vendor) != 1 ? ' hidden' : '' }}">
+                            <label for="abo_start" class="col-md-4 control-label">Abo Start</label>
+                            <div class="col-md-6">
+                                <input id="abo_start" type="text" readonly class="form-control" name="abo_start" value="{{ $member->abo_start }}">
+                            </div>
+                        </div>
+
                         <div class="form-group">
                             <div class="col-md-6 col-md-offset-4">
-                                <button type="submit" class="btn btn-primary">
+                                <button type="submit" name="save" value="ok" class="btn btn-primary">
+                                    <span class="glyphicon glyphicon-floppy-disk" aria-hidden="true"></span> OK
+                                </button>
+                                <button type="submit" name="save" value="save" class="btn btn-info">
                                     <span class="glyphicon glyphicon-floppy-disk" aria-hidden="true"></span> Speichern
                                 </button>
                                 <a href="{{ route('member.index') }}" class="btn btn-default">
@@ -157,10 +167,6 @@
                         </div>
 
                     </form>
-                    <hr/>
-                    <h2>Visa</h2>
-                    <hr/>
-                    <h2>Location</h2>
                     <hr/>
                     <div class="center-block">
                         <form method="post" action="{{ route('member.delete', ['id' => $member->id]) }}">
@@ -175,5 +181,66 @@
             </div>
         </div>
     </div>
+    @if($member->vendor)
+    <div class="row">
+        <div class="col-md-12">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    Visa
+                </div>
+                <div class="panel-body">
+                    <div class="col-lg-2 col-sm-2">
+                        <button type="button" data-href="{{ route('visa.create', ['memberId' => $member->id]) }}" class="btn btn-primary visa_create">
+                            <span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Add Visa
+                        </button>
+                    </div>
+                    <table id="visas" class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th>Titel</th>
+                                <th>Beschreibung</th>
+                                <th>Bestätigung</th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach($member->visas as $visa)
+                                <tr data-href="{{ route('visa.update', ['memberId' => $member->id, 'id' => $visa->id]) }}">
+                                    <td>
+                                        <input class="visa_id" type="hidden" name="visa_id" value="{{ $visa->id }}">
+                                        <input class="visa_title form-control" type="text" name="visa_title" value="{{ $visa->title }}">
+                                    </td>
+                                    <td><textarea class="visa_discribe form-control" name="visa_discribe">{{ $visa->discribe }}</textarea></td>
+                                    <td>
+                                        <input type="checkbox" class="visa_approved form-control" name="visa_approved"  {{  $visa->approved == 1 ? 'checked' : '' }} value="1">
+                                    </td>
+                                    <td>
+                                        <button type="button" class="btn btn-default visa_save">
+                                            <span class="glyphicon glyphicon-floppy-disk" aria-hidden="true"></span>
+                                        </button>
+                                        <button type="button" class="btn btn-danger visa_delete">
+                                            <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
+                                        </button>
+                                    </td>
+                                </tr>
+                            @endforeach
+                        </tbody>
+                    </table>
+
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="panel panel-default">
+                <div class="panel-heading">Location</div>
+                <div class="panel-body">
+
+                </div>
+            </div>
+        </div>
+    </div>
+    @endif
 </div>
 @endsection

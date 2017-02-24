@@ -101,5 +101,45 @@
                 </div>
             </div>
         </div>
+
+        <div class="row">
+            <div class="col-md-12">
+                <div class="panel panel-default">
+                    <div class="panel-heading">Markets</div>
+                    <div class="panel-body">
+                        <div class="col-lg-2 col-sm-2">
+                            <a href="{{ route('market.create', ['id' => $location->id]) }}" class="btn btn-primary">
+                                <span class="glyphicon glyphicon-plus" aria-hidden="true"></span> New
+                            </a>
+                        </div>
+                        <table class="table table-striped">
+                            <thead>
+                                <tr>
+                                    <th>Market</th>
+                                    <th>Start</th>
+                                    <th>End</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach($location->markets as $market)
+                                    <tr class="clickable-row" data-href='{{ route('market.edit', ['locationId' => $location->id, 'id' => $market->id ]) }}'>
+                                        <td>
+                                            {{ $market->name }}
+                                        </td>
+                                        <td>
+                                            {{ (new \Carbon\Carbon($market->start_date))->todatestring() }}
+                                        </td>
+                                        <td>
+                                            {{ (new \Carbon\Carbon($market->end_date))->todatestring() }}
+                                        </td>
+                                    </tr>
+                                @endforeach
+                            </tbody>
+
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 @endsection
