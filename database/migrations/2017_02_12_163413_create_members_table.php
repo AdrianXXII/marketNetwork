@@ -16,11 +16,11 @@ class CreateMembersTable extends Migration
         Schema::create('members', function (Blueprint $table) {
             $table->increments('id');
             $table->string('name', 30);
-            $table->string('firstname', 30);
-            $table->string('street', 50);
-            $table->string('city', 30);
-            $table->string('zip', 10);
-            $table->string('email', 50);
+            $table->string('firstname', 30)->nullable();
+            $table->string('street', 50)->nullable();
+            $table->string('city', 30)->nullable();
+            $table->string('zip', 10)->nullable();
+            $table->string('email', 50)->nullable();
             $table->string('tel', 15)->nullable();
             $table->boolean('vendor')->default(false);
             $table->boolean('trialperiode')->nullable();

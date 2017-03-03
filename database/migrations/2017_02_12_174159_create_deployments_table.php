@@ -15,8 +15,9 @@ class CreateDeploymentsTable extends Migration
     {
         Schema::create('deployments', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('title');
-            $table->text('description')->nullable;
+            $table->string('title',30);
+            $table->string('employee',50)->nullable();
+            $table->text('description')->nullable();
             $table->timestamp("deployment_date");
             $table->decimal("duration",10,2);
             $table->decimal("cost",10,2);

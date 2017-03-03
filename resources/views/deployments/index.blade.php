@@ -22,7 +22,7 @@
                             </div>
                             <div class="col-lg-2 col-sm-2">
                                 <a href="{{ route('deployment.create') }}" class="btn btn-primary">
-                                    <span class="glyphicon glyphicon-plus" aria-hidden="true"></span> New
+                                    <span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Neu
                                 </a>
                             </div>
                         </div>
@@ -39,8 +39,8 @@
                         <table class="table table-striped">
                             <thead>
                                 <tr>
-                                    <th>Title</th>
-                                    <th>Deployment Date</th>
+                                    <th>Titel</th>
+                                    <th>Einsatzdatum</th>
                                 </tr>
                             </thead>
                             <tbody>

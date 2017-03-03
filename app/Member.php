@@ -21,13 +21,12 @@ class Member extends Model
     public function visas(){
         return $this->hasMany('App\Visa');
     }
-/*
+
     public function locations(){
-        $this->belongsToMany('App\LocationMember', 'member_id');
+        return $this->belongsToMany('App\Location', 'location_members');
     }
 
     public function markets(){
-        $this->belongsToMany('App\MarketMember', 'member_id');
+        return $this->belongsToMany('App\Market', 'market_members');
     }
-*/
 }

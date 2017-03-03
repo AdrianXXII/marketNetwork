@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Deployment;
+use App\Http\Requests\StoreDeploymentPost;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Input;
 
@@ -42,10 +43,11 @@ class DeploymentController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(StoreDeploymentPost $request)
     {
         $deployment = new Deployment();
         $deployment->title            = $request->get('title');
+        $deployment->employee         = $request->get('employee');
         $deployment->description      = $request->get('description');
         $deployment->deployment_date  = $request->get('deployment_date');
         $deployment->duration         = $request->get('duration');
@@ -86,7 +88,7 @@ class DeploymentController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(StoreDeploymentPost $request, $id)
     {
         $deployment = Deployment::find($id);
         $deployment->title            = $request->get('title');

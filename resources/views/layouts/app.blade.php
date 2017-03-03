@@ -45,7 +45,7 @@
                     <!-- Left Side Of Navbar -->
                     <ul class="nav navbar-nav">
                         <li><a href="{{ route('member.index') }}">Adressen</a></li>
-                        <li><a href="{{ route('location.index') }}">Standörte</a></li>
+                        <li><a href="{{ route('location.index') }}">Standorte</a></li>
                         <li><a href="{{ route('deployment.index') }}">Einsätze</a></li>
                     </ul>
 
@@ -54,7 +54,7 @@
                         <!-- Authentication Links -->
                         @if (Auth::guest())
                             <li><a href="{{ route('login') }}">Login</a></li>
-                            <li><a href="{{ route('register') }}">Register</a></li>
+                            <li><a href="{{ route('register') }}">Registrieren</a></li>
                         @else
                             <li class="dropdown">
                                 <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
@@ -108,7 +108,7 @@
                 var visa = {};
                 visa.id = tr.find('.visa_id').prop('value');
                 visa.title = tr.find('.visa_title').prop('value');
-                visa.discribe = tr.find('.visa_discribe').val();
+                visa.describe  = tr.find('.visa_describe ').val();
                 visa.approved = tr.find('.visa_approved').prop('checked') == true ? 1 : 0;
                 $.ajax({
                     url: dHref,
@@ -118,7 +118,7 @@
                         console.log(data);
                         tr.find('.visa_id').prop('value', data.id);
                         tr.find('.visa_title').prop('value', data.title);
-                        tr.find('.visa_discribe').val(data.discribe);
+                        tr.find('.visa_describe ').val(data.describe );
                         var checked = data.approved == 1 ? true : false;
                         tr.find('.visa_approved').prop('checked', checked);
                     },
@@ -140,7 +140,7 @@
                             console.log('has none');
                             $('#visas tbody').html("<tr data-href='"+ dHref + "/" + data.id + "'>" +
                                     "<td><input class='visa_id' type='hidden' name='visa_id' value='"+data.id + "'><input class='visa_title form-control' type='text' name='visa_title' value='"+data.title+"'></td>" +
-                                    "<td><textarea class='visa_discribe form-control' name='visa_discribe'>" + data.discribe + "</textarea></td>" +
+                                    "<td><textarea class='visa_describe  form-control' name='visa_describe '>" + data.describe  + "</textarea></td>" +
                                     "<td><input type='checkbox' class='visa_approved form-control' name='visa_approved' " + (data.approved == 1 ? 'checked' : '') + " value='1'></td>" +
                                     "<td><button type='button' class='btn btn-default visa_save'><span class='glyphicon glyphicon-floppy-disk' aria-hidden='true'></span></button>" +
                                     "<button type='button' class='btn btn-danger visa_delete'><span class='glyphicon glyphicon-trash' aria-hidden='true'></span></button></td></tr>");
@@ -150,7 +150,7 @@
                             trHref = trHref.substring(0, trHref.lastIndexOf('/')+1) + data.id;
                             tr.find('.visa_id').prop('value', data.id);
                             tr.find('.visa_title').prop('value', '');
-                            tr.find('.visa_discribe').val('');
+                            tr.find('.visa_describe ').val('');
                             tr.find('.visa_approved').prop('checked', false);
                             tr.prop("data-href", trHref);
                             lastTr.after(tr);
@@ -179,6 +179,73 @@
                     error: function(jqXHR,textStatus){
                         console.log(jqXHR.responseText);
                         console.log(textStatus);
+                    }
+                });
+            });
+
+            $('.location-select').change(function(){
+                var tr = $(this).parents('tr');
+                var dHref = tr.data("href");
+                var method = 'POST';
+                var sendData = {};
+                sendData.location_id = $(this).prop('value');
+                sendData.old_location_id = tr.find('.location_id').prop('value');
+
+                if(sendData.old_location_id == 0){
+                    method = 'POST';
+                } else {
+                    if(sendData.location_id == 0 ){
+                        method = 'DELETE';
+                    } else {
+                        method = 'PUT';
+                    }
+                }
+                console.log(sendData);
+                console.log(dHref + " '" + method + "'");
+                $.ajax({
+                    url: dHref,
+                    method: method,
+                    data: sendData,
+                    success: function(data, textStatus, jqXHR){
+                       $(this).prop('value', sendData.location_id);
+                    },
+                    error: function(jqXHR,textStatus){
+                        //console.log(jqXHR.responseText);
+                        console.log(textStatus);
+                    }
+                });
+            });
+
+            $('.market-member-create').click(function(){
+                var dHref = $(this).data("href") + "/" + $('#market-vendor').prop('value');
+                console.log(dHref);
+                var sendData = {};
+                $.ajax({
+                    url: dHref,
+                    method: 'PUT',
+                    success: function(data, textStatus, jqXHR){
+                        if(data.code = 1){
+                            var tdName = $(document.createElement('td'));
+                            var tdDelete = $(document.createElement('td'));
+                            var tr = $(document.createElement('tr'));
+                            tdName.text
+                            lastTr.after(tr);
+                        }
+                    }
+                });
+            });
+
+            $('.market-member-delete').click(function(){
+                var tr = $(this).parents('tr');
+                var dHref = tr.data("href");
+                var sendData = {};
+                $.ajax({
+                    url: dHref,
+                    method: 'DELETE',
+                    success: function(data, textStatus, jqXHR){
+                        if(data.code = 1){
+                            tr.remove();
+                        }
                     }
                 });
             });

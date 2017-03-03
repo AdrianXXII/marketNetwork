@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Market;
+use App\Member;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 
@@ -66,7 +67,8 @@ class MarketController extends Controller
     public function edit($locationId, $id)
     {
         $market = Market::find($id);
-        return view('market.edit', compact('market', 'locationId'));
+        $members = Member::with('locations')->where('id','=', $locationId)->get();
+        return view('market.edit', compact('market', 'locationId', 'members'));
     }
 
     /**
@@ -97,6 +99,7 @@ class MarketController extends Controller
     public function destroy($locationId, $id)
     {
         $market = Market::find($id);
+        $market->delete();
         return redirect(route('location.edit', ['id' => $locationId]));
     }
 }

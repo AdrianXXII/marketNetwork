@@ -36,10 +36,23 @@
                             </div>
                         </div>
 
+                        <div class="form-group{{ $errors->has('employee') ? ' has-error' : '' }}">
+                            <label for="description" class="col-md-4 control-label">Mitarbeiter</label>
+                            <div class="col-md-6">
+                                <input id="employee" type="text" class="form-control" name="employee" value="{{ old('employee') }}">
+
+                                @if ($errors->has('employee'))
+                                    <span class="help-block">
+                                        <strong>{{ $errors->first('employee') }}</strong>
+                                    </span>
+                                @endif
+                            </div>
+                        </div>
+
                         <div class="form-group{{ $errors->has('deployment_date') ? ' has-error' : '' }}">
                             <label for="deployment_date" class="col-md-4 control-label">Einsatzdatum</label>
                             <div class="col-md-6">
-                                <input id="deployment_date" type="text" class="form-control" name="deployment_date" value="{{ old('deployment_date', $deployment->deployment_date) }}">
+                                <input id="deployment_date" type="datetime-local" placeholder="2017-03-25 17:20" class="form-control" name="deployment_date" value="{{ old('deployment_date', $deployment->deployment_date) }}">
 
                                 @if ($errors->has('deployment_date'))
                                     <span class="help-block">

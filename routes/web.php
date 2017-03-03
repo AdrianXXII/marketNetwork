@@ -52,4 +52,10 @@ Route::post('/address/{memberId}/visa', 'VisaController@create')->name('visa.cre
 Route::put('/address/{memberId}/visa/{id}', 'VisaController@update')->name('visa.update');
 Route::delete('/address/{memberId}/visa/{id}', 'VisaController@destroy')->name('visa.delete');
 
+Route::post('/address/{memberId}/location', 'LocationMemberController@store')->name('locationMember.create');
+Route::put('/address/{memberId}/location', 'LocationMemberController@update')->name('locationMember.update');
+Route::delete('/address/{memberId}/location', 'LocationMemberController@destroy')->name('locationMember.delete');
+
+Route::put('/market/{marketId}/vendor/{vendorId}', 'MarketMemberController@update')->name('marketMember.update');
+Route::delete('/market/{marketId}/vendor/{vendorId}', 'MarketMemberController@destroy')->name('marketMember.delete');
 

@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Abo;
+use App\Http\Requests\StoreMemberPost;
+use App\Location;
 use App\Member;
 
 use Carbon\Carbon;
@@ -45,6 +47,7 @@ class MembersController extends Controller
     public function create()
     {
         $member = new Member();
+        $abos = Abo::orderBy('name')->get();
         return view('members.create', compact('member', 'abos'));
     }
 
@@ -54,10 +57,9 @@ class MembersController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(StoreMemberPost $request)
     {
         $member = new \App\Member();
-
         $member->name           = $request->get('name');
         $member->firstname      = $request->get('firstname');
         $member->email          = $request->get('email');
@@ -65,6 +67,7 @@ class MembersController extends Controller
         $member->zip            = $request->get('zip');
         $member->city           = $request->get('city');
         $member->tel            = $request->get('tel');
+        $member->abo_id         = $request->get('abo');
 
         $member->vendor         = $request->get('vendor') == null ? 0 : $request->get('vendor');
         if( $member->vendor ){
@@ -95,7 +98,8 @@ class MembersController extends Controller
     {
         $member = Member::find($id);
         $abos = Abo::orderBy('name')->get();
-        return view('members.edit', compact('member', 'abos'));
+        $locations = Location::orderBy('name')->get();
+        return view('members.edit', compact('member', 'abos', 'locations'));
     }
 
     /**
@@ -105,7 +109,7 @@ class MembersController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(StoreMemberPost $request, $id)
     {
         //
         $member = Member::find($id);
@@ -124,6 +128,15 @@ class MembersController extends Controller
             $member->abo_start = new Carbon();
         }
         $member->save();
+
+        $i = $member->abo->limit;
+
+        foreach($member->locations as $location){
+            if($i <= 0){
+                $member->locations()->detach($location->id);
+            }
+            $i--;
+        }
 
         if($request->get("save") == 'ok') {
             return redirect(route('member.index'));

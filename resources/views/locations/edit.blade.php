@@ -63,7 +63,7 @@
                             </div>
 
                             <div class="form-group{{ $errors->has('tel') ? ' has-error' : '' }}">
-                                <label for="member_max" class="col-md-4 control-label">Max</label>
+                                <label for="member_max" class="col-md-4 control-label">Anzahl Plätze</label>
                                 <div class="col-md-6">
                                     <input id="member_max" type="text" class="form-control" name="member_max" value="{{ old('member_max', $location->member_max) }}">
 
@@ -105,11 +105,11 @@
         <div class="row">
             <div class="col-md-12">
                 <div class="panel panel-default">
-                    <div class="panel-heading">Markets</div>
+                    <div class="panel-heading">Märkte</div>
                     <div class="panel-body">
                         <div class="col-lg-2 col-sm-2">
                             <a href="{{ route('market.create', ['id' => $location->id]) }}" class="btn btn-primary">
-                                <span class="glyphicon glyphicon-plus" aria-hidden="true"></span> New
+                                <span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Neu
                             </a>
                         </div>
                         <table class="table table-striped">
@@ -123,15 +123,9 @@
                             <tbody>
                                 @foreach($location->markets as $market)
                                     <tr class="clickable-row" data-href='{{ route('market.edit', ['locationId' => $location->id, 'id' => $market->id ]) }}'>
-                                        <td>
-                                            {{ $market->name }}
-                                        </td>
-                                        <td>
-                                            {{ (new \Carbon\Carbon($market->start_date))->todatestring() }}
-                                        </td>
-                                        <td>
-                                            {{ (new \Carbon\Carbon($market->end_date))->todatestring() }}
-                                        </td>
+                                        <td>{{ $market->name }}</td>
+                                        <td>{{ (new \Carbon\Carbon($market->start_date))->todatestring() }}</td>
+                                        <td>{{ (new \Carbon\Carbon($market->end_date))->todatestring() }}</td>
                                     </tr>
                                 @endforeach
                             </tbody>

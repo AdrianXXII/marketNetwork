@@ -22,7 +22,7 @@
                             </div>
                             <div class="col-lg-2 col-sm-2">
                                 <a href="{{ route('member.create') }}" class="btn btn-primary">
-                                    <span class="glyphicon glyphicon-plus" aria-hidden="true"></span> New
+                                    <span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Neu
                                 </a>
                             </div>
                         </div>

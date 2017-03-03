@@ -18,4 +18,8 @@ class Location extends Model
         return $this->hasMany('App\Market');
     }
 
+    public function members(){
+        return $this->belongsToMany('App\Member');
+    }
+
 }

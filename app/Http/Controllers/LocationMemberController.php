@@ -2,61 +2,28 @@
 
 namespace App\Http\Controllers;
 
+use App\LocationMember;
+use App\Member;
 use Illuminate\Http\Request;
 
 class LocationMemberController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
-    {
-        //
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
-
     /**
      * Store a newly created resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(Request $request, $memberId)
     {
-        //
-    }
+        $oldLocationId = $request->get('old_location_id');
+        $locationId = $request->get('location_id');
+        $message = new \AjaxReply();
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
-    }
+        $member = Member::find($memberId);
+        $member->locations()->attach($locationId);
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
+        return $member->locations;
     }
 
     /**
@@ -66,9 +33,21 @@ class LocationMemberController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, $memberId)
     {
-        //
+        $oldLocationId = $request->get('old_location_id');
+        $locationId = $request->get('location_id');
+        $message = new \AjaxReply();
+
+        $message->code = 1;
+        $message->message = "Standort erfolgreich erfasst";
+
+        $member = Member::find($memberId);
+        $member->locations()->detach($oldLocationId);
+        $member->locations()->attach($locationId);
+
+
+        return $member->locations;
     }
 
     /**
@@ -77,8 +56,13 @@ class LocationMemberController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Request $request, $memberId)
     {
-        //
+        $oldLocationId = $request->get('old_location_id');
+
+        $member = Member::find($memberId);
+        $member->locations()->detach($oldLocationId);
+
+        return $member->locations;
     }
 }

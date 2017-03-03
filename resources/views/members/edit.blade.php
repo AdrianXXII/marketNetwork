@@ -114,7 +114,7 @@
                             </div>
                         </div>
 
-                        <div class="form-group{{ $errors->has('trialperiode') ? ' has-error' : '' }}">
+                        <div class="form-group vendor-only{{ $errors->has('trialperiode') ? ' has-error' : '' }}{{ old('vendor', $member->vendor) != 1 ? ' hidden' : '' }}">
                             <label for="trialperiode" class="col-md-4 control-label">Probezeit</label>
                             <div class="col-md-6">
                                 <input id="trialperiode" type="checkbox" class="form-control" name="trialperiode"  {{  old('trialperiode', $member->trialperiode) == 1 ? 'checked' : '' }} value="1">
@@ -137,9 +137,9 @@
                                     @endforeach
                                 </select>
 
-                                @if ($errors->has('trialperiode'))
+                                @if ($errors->has('abo'))
                                     <span class="help-block">
-                                        <strong>{{ $errors->first('trialperiode') }}</strong>
+                                        <strong>{{ $errors->first('abo') }}</strong>
                                     </span>
                                 @endif
                             </div>
@@ -210,7 +210,7 @@
                                         <input class="visa_id" type="hidden" name="visa_id" value="{{ $visa->id }}">
                                         <input class="visa_title form-control" type="text" name="visa_title" value="{{ $visa->title }}">
                                     </td>
-                                    <td><textarea class="visa_discribe form-control" name="visa_discribe">{{ $visa->discribe }}</textarea></td>
+                                    <td><textarea class="visa_describe  form-control" name="visa_describe ">{{ $visa->describe  }}</textarea></td>
                                     <td>
                                         <input type="checkbox" class="visa_approved form-control" name="visa_approved"  {{  $visa->approved == 1 ? 'checked' : '' }} value="1">
                                     </td>
@@ -234,9 +234,35 @@
     <div class="row">
         <div class="col-md-12">
             <div class="panel panel-default">
-                <div class="panel-heading">Location</div>
+                <div class="panel-heading">Standorte (Anzahl: {{ $member->abo->limit }})</div>
                 <div class="panel-body">
+                    <table class="table table-stripped">
 
+                        @for($i = 0; $i < $member->abo->limit; $i++ )
+                            <tr data-href="{{ route('locationMember.create', ['memberId' => $member->id]) }}">
+                                <td>
+                                    Standort {{ $i+1 }}
+                                </td>
+                                <td>
+                                    @if(count($member->locations) > $i )
+                                        <input type="hidden" class="location_id" value="{{ $member->locations[$i]->id }}">
+                                    @else
+                                        <input type="hidden" class="location_id" value="0">
+                                    @endif
+                                    <select class="form-control location-select" name="location">
+                                        <option value="0">Ungesetzt</option>
+                                        @foreach($locations as $location)
+                                            @if(count($member->locations) > $i )
+                                                <option {{ $location->id == $member->locations[$i]->id ? 'selected' :'' }} value="{{ $location->id }}">{{ $location->name }}</option>
+                                            @else
+                                                <option value="{{ $location->id }}">{{ $location->name }}</option>
+                                            @endif
+                                        @endforeach
+                                    </select>
+                                </td>
+                            </tr>
+                        @endfor
+                    </table>
                 </div>
             </div>
         </div>

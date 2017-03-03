@@ -43,7 +43,7 @@ class LocationController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(StoreLocationPost $request)
     {
         $location = new Location();
         $location->name           = $request->get('name');
@@ -85,7 +85,7 @@ class LocationController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(StoreLocationPost $request, $id)
     {
         $location = Location::find($id);
         $location->name           = $request->get('name');

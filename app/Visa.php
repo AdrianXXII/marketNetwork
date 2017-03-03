@@ -12,7 +12,7 @@ class Visa extends Model
     // Timestamp ausstellen
     public $timestamps = false;
 
-    protected $fillable = array('title', 'discribe', 'approved', 'member_id');
+    protected $fillable = array('title', 'describe ', 'approved', 'member_id');
 
     public function member(){
         return $this->belongsTo('App\Member', 'member_id');

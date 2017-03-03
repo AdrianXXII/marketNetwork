@@ -104,11 +104,29 @@
                         <div class="form-group{{ $errors->has('vendor') ? ' has-error' : '' }}">
                             <label for="vendor" class="col-md-4 control-label">Verkäufer</label>
                             <div class="col-md-6">
-                                <input id="vendor" type="checkbox" class="form-control" name="vendor" value="{{ old('vendor') }}">
+                                <input id="vendor" type="checkbox" class="form-control member-vendor" name="vendor" value="{{ old('vendor') }}">
 
                                 @if ($errors->has('vendor'))
                                     <span class="help-block">
                                         <strong>{{ $errors->first('vendor') }}</strong>
+                                    </span>
+                                @endif
+                            </div>
+                        </div>
+
+                        <div class="form-group vendor-only{{ $errors->has('abo') ? ' has-error' : '' }}{{ old('vendor') != 1 ? ' hidden' : '' }}">
+                            <label for="abo" class="col-md-4 control-label">Abo</label>
+                            <div class="col-md-6">
+
+                                <select name="abo" id="abo" class="form-control">
+                                    @foreach($abos as $abo)
+                                        <option {{ $abo->id == old('abo') ? 'selected' : '' }} value="{{ $abo->id }}">{{ $abo->name }}</option>
+                                    @endforeach
+                                </select>
+
+                                @if ($errors->has('abo'))
+                                    <span class="help-block">
+                                        <strong>{{ $errors->first('abo') }}</strong>
                                     </span>
                                 @endif
                             </div>

@@ -74,6 +74,64 @@
                                 </div>
                             </div>
                         </form>
+                        <hr/>
+                        <div class="center-block">
+                            <form method="post" action="{{ route('market.delete', ['id' => $market->id, 'locationId' => $locationId]) }}">
+                                {{ csrf_field() }}
+                                <input type="hidden" name="_method" value="DELETE">
+                                <button type="submit" class="btn btn-danger center-block">
+                                    <span class="glyphicon glyphicon-trash" aria-hidden="true"></span> Löschen
+                                </button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        Verkäufer
+                    </div>
+                    <div class="panel-body">
+                        <div class="row">
+                            <div class="col-lg-8 col-lg-offset-2">
+                                <div class="input-group">
+                                    <select class="form-control" name="vendors" id="market-vendor">
+                                        @foreach($members as $member)
+                                            <option value="{{ $member->id }}">{{ $member->name . " " . $member->firstname }}</option>
+                                        @endforeach
+                                    </select>
+                                    <span class="input-group-btn">
+                                        <button class="btn btn-default market-member-create" data-href="{{ route('marketMember.update',['marketID' => $market->id, 'vendorId' => null]) }}">
+                                            <span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Hinzufügen
+                                        </button>
+                                    </span>
+
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-lg-10 col-lg-offset-1">
+                                <table class="table table-striped table-hover">
+                                    <tr>
+                                        <th>Verkäufer</th>
+                                        <th></th>
+                                    </tr>
+                                    @foreach($market->members as $member)
+                                        <tr class="market-member-{{ $member->id }}" data-href="{{ route('marketMember.delete',['marketID' => $market->id, 'vendorId' => $member->id]) }}">
+                                            <td>{{  strlen($member->firstname) > 0 ? $member->firstname . ' ' . $member->name : $member->name }}</td>
+                                            <td>
+                                                <button type="button" class="btn btn-danger market-member-delete">
+                                                    <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
+                                                </button>
+                                            </td>
+                                        </tr>
+                                    @endforeach
+                                </table>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
