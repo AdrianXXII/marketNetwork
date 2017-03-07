@@ -13,8 +13,11 @@
 
     <!-- Styles -->
     <link href="/css/app.css" rel="stylesheet">
+    <link href="/css/marketnetwork.css" rel="stylesheet">
+    <link href="/css/bootstrap-datetimepicker.min.css" rel="stylesheet">
 
     <!-- Scripts -->
+
     <script>
         window.Laravel = {!! json_encode([
             'csrfToken' => csrf_token(),
@@ -85,6 +88,8 @@
 
     <!-- Scripts -->
     <script src="/js/app.js"></script>
+    <script src="https://momentjs.com/downloads/moment.js"></script>
+    <script src="/js/bootstrap-datetimepicker.js"></script>
     <script>
         jQuery(document).ready(function($) {
             $.ajaxSetup({
@@ -95,6 +100,18 @@
 
             $(".clickable-row").click(function() {
                 window.document.location = $(this).data("href");
+            });
+
+            $('#market-start, #market-end').datetimepicker({
+                format: 'YYYY-MM-DD'
+            });
+
+            $('#deployment-date-datepicker').datetimepicker({
+                format: 'YYYY-MM-DD'
+            });
+
+            $('#deployment-end-timepicker, #deployment-star-timepicker').datetimepicker({
+                format: 'LT'
             });
 
             $('[name="vendor"].member-vendor').click(function(){
@@ -110,6 +127,7 @@
                 visa.title = tr.find('.visa_title').prop('value');
                 visa.describe  = tr.find('.visa_describe ').val();
                 visa.approved = tr.find('.visa_approved').prop('checked') == true ? 1 : 0;
+                console.log(visa);
                 $.ajax({
                     url: dHref,
                     method: 'PUT',
@@ -218,6 +236,7 @@
 
             $('.market-member-create').click(function(){
                 var dHref = $(this).data("href") + "/" + $('#market-vendor').prop('value');
+                var lastTr = $('#market-vendor tbody tr').last();
                 console.log(dHref);
                 var sendData = {};
                 $.ajax({
@@ -228,7 +247,12 @@
                             var tdName = $(document.createElement('td'));
                             var tdDelete = $(document.createElement('td'));
                             var tr = $(document.createElement('tr'));
-                            tdName.text
+                            tr.data("href", dHref);
+                            tr.addClass(",arlet-member-"+ data.data.id );
+                            tdName.text = data.data.lastname + " " + data.data.lastname;
+                            tdDelete.innerHTML = "<button type='button' class='btn btn-danger market-member-delete'><span class='glyphicon glyphicon-trash' aria-hidden='true'></span></button>";
+                            tr.append(tdName);
+                            tr.append(tdName);
                             lastTr.after(tr);
                         }
                     }

@@ -24,9 +24,14 @@
                             </div>
 
                             <div class="form-group{{ $errors->has('start_date') ? ' has-error' : '' }}">
-                                <label for="start_date" class="col-md-4 control-label">Ort</label>
+                                <label for="start_date" class="col-md-4 control-label">Start</label>
                                 <div class="col-md-6">
-                                    <input id="start_date" type="date" class="form-control" name="start_date" value="{{ old('start_date') }}">
+                                    <div class="input-group" id="market-start">
+                                        <input id="start_date" type="text" class="form-control" name="start_date" value="{{ old('start_date') }}">
+                                        <span class="input-group-addon">
+                                           <span class="glyphicon glyphicon-calendar"></span>
+                                        </span>
+                                    </div>
 
                                     @if ($errors->has('start_date'))
                                         <span class="help-block">
@@ -37,9 +42,14 @@
                             </div>
 
                             <div class="form-group{{ $errors->has('end_date') ? ' has-error' : '' }}">
-                                <label for="end_date" class="col-md-4 control-label">Ort</label>
+                                <label for="end_date" class="col-md-4 control-label">End</label>
                                 <div class="col-md-6">
-                                    <input id="end_date" type="date" class="form-control" name="end_date" value="{{ old('end_date') }}">
+                                    <div class="input-group" id="market-end">
+                                        <input id="end_date" type="text" class="form-control" name="end_date" value="{{ old('end_date') }}">
+                                        <span class="input-group-addon">
+                                           <span class="glyphicon glyphicon-calendar"></span>
+                                        </span>
+                                    </div>
 
                                     @if ($errors->has('end_date'))
                                         <span class="help-block">

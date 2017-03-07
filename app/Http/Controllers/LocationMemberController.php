@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Helpers\AjaxReply;
 use App\LocationMember;
 use App\Member;
 use Illuminate\Http\Request;
@@ -18,12 +19,15 @@ class LocationMemberController extends Controller
     {
         $oldLocationId = $request->get('old_location_id');
         $locationId = $request->get('location_id');
-        $message = new \AjaxReply();
+        $message = new AjaxReply();
+
+        $message->code = 1;
+        $message->message = "Standort erfolgreich erfasst";
 
         $member = Member::find($memberId);
         $member->locations()->attach($locationId);
 
-        return $member->locations;
+        return $message;
     }
 
     /**
@@ -37,7 +41,7 @@ class LocationMemberController extends Controller
     {
         $oldLocationId = $request->get('old_location_id');
         $locationId = $request->get('location_id');
-        $message = new \AjaxReply();
+        $message = new AjaxReply();
 
         $message->code = 1;
         $message->message = "Standort erfolgreich erfasst";
@@ -47,7 +51,7 @@ class LocationMemberController extends Controller
         $member->locations()->attach($locationId);
 
 
-        return $member->locations;
+        return $message;
     }
 
     /**
@@ -59,10 +63,14 @@ class LocationMemberController extends Controller
     public function destroy(Request $request, $memberId)
     {
         $oldLocationId = $request->get('old_location_id');
+        $message = new AjaxReply();
+
+        $message->code = 1;
+        $message->message = "Standort erfolgreich entfernt";
 
         $member = Member::find($memberId);
         $member->locations()->detach($oldLocationId);
 
-        return $member->locations;
+        return $message;
     }
 }

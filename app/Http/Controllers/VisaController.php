@@ -80,7 +80,7 @@ class VisaController extends Controller
         $visa = Visa::where('member_id', '=', $memberId)->where('id', '=', $id)->first();
         $visa->title = $request->get('title');
         $visa->approved = $request->get('approved');
-        $visa->describe  = $request->get('describe ');
+        $visa->describe  = $request->get('describe');
         $visa->save();
         return $visa;
     }

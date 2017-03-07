@@ -15,7 +15,9 @@
 Route::group(['middleware' => 'auth'], function() {
     Route::auth();
 
-    Route::get('/', 'HomeController@index');
+    Route::get('/', function(){
+        return redirect(route('member.index'));
+    });
 
     Route::get('/address', 'MembersController@index')->name('member.index');
     Route::get('/address/create', 'MembersController@create')->name('member.create');

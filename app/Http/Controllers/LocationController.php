@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\StoreLocationPost;
 use App\Location;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Input;

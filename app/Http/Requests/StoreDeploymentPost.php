@@ -29,6 +29,8 @@ class StoreDeploymentPost extends FormRequest
             'employee.max' => 'Der Mitarbeitername darf nicht länger sein als 50 Zeichen!',
             'employee.min' => 'Die Mitarbeitername darf nicht kürzer sein als 2 Zeichen!',
             'deployment_date.date' => 'Das Datum ist nicht valid',
+            'deployment_start.required' => 'Sie müssen eine Zeit angeben',
+            'deployment_end.required' => 'Sie müssen eine Zeit angeben',
             'duration.numeric' => 'Die Dauer muss ',
             'cost.numeric' => 'Die Kosten müssen als Zahl angegeben werden'
         ];
@@ -46,6 +48,8 @@ class StoreDeploymentPost extends FormRequest
             'employee' => 'max:50|min:2',
             'description' => 'min:2',
             'deployment_date' => 'date',
+            'deployment_start' => 'required',
+            'deployment_end' => 'required',
             'duration' => 'numeric',
             'cost' => 'numeric'
         ];

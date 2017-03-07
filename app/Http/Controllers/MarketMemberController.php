@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Market;
 use App\Helpers\AjaxReply;
+use App\Member;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 
@@ -22,13 +23,12 @@ class MarketMemberController extends Controller
             $message->code = self::CODE_DUPLICATE;
             $message->message = "Member schon erfasst";
             $message->msgType = "Warning";
-            $message->data = $market;
+            $message->data = Member::find($vendorId);
         } else {
             $market->members()->attach($vendorId);
-            $market->reload();
             $message->code = self::CODE_OKAY;
             $message->message = "Member erfolgreich erfasst";
-            $message->data = $market;
+            $message->data = Member::find($vendorId);
         }
         return response()->json($message);
     }

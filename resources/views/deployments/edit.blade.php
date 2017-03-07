@@ -7,8 +7,9 @@
             <div class="panel panel-default">
                 <div class="panel-heading">Adressen</div>
                 <div class="panel-body">
-                    <form class="form-horizontal" method="POST" action="{{ route('deployment.save') }}">
+                    <form class="form-horizontal" method="POST" action="{{ route('deployment.update', ['id' => $deployment->id ]) }}">
                         {{ csrf_field() }}
+                        <input type="hidden" name="_method" value="PUT">
 
                         <div class="form-group{{ $errors->has('title') ? ' has-error' : '' }}">
                             <label for="title" class="col-md-4 control-label">Titel</label>
@@ -39,7 +40,7 @@
                         <div class="form-group{{ $errors->has('employee') ? ' has-error' : '' }}">
                             <label for="description" class="col-md-4 control-label">Mitarbeiter</label>
                             <div class="col-md-6">
-                                <input id="employee" type="text" class="form-control" name="employee" value="{{ old('employee') }}">
+                                <input id="employee" type="text" class="form-control" name="employee" value="{{ old('employee', $deployment->employee  ) }}">
 
                                 @if ($errors->has('employee'))
                                     <span class="help-block">
@@ -52,7 +53,12 @@
                         <div class="form-group{{ $errors->has('deployment_date') ? ' has-error' : '' }}">
                             <label for="deployment_date" class="col-md-4 control-label">Einsatzdatum</label>
                             <div class="col-md-6">
-                                <input id="deployment_date" type="datetime-local" placeholder="2017-03-25 17:20" class="form-control" name="deployment_date" value="{{ old('deployment_date', $deployment->deployment_date) }}">
+                                <div class="input-group" id="deployment-date-datepicker">
+                                    <input id="deployment_date" type="text" placeholder="2017-03-25" class="form-control" name="deployment_date" value="{{ old('deployment_end', (new \Carbon\Carbon($deployment->deployment_date))->toDateString()  ) }}">
+                                    <span class="input-group-addon">
+                                        <span class="glyphicon glyphicon-calendar"></span>
+                                     </span>
+                                </div>
 
                                 @if ($errors->has('deployment_date'))
                                     <span class="help-block">
@@ -62,10 +68,47 @@
                             </div>
                         </div>
 
+                        <div class="form-group{{ $errors->has('deployment_start') ? ' has-error' : '' }}">
+                            <label for="deployment_start" class="col-md-4 control-label">Einsatzstart</label>
+                            <div class="col-md-6">
+                                <div class="input-group" id="deployment-star-timepicker">
+                                    <input id="deployment_start" type="text" placeholder="17:20" class="form-control" name="deployment_start" value="{{ old('deployment_date', (new \Carbon\Carbon($deployment->deployment_date))->toTimeString() ) }}">
+                                    <span class="input-group-addon">
+                                        <span class="glyphicon glyphicon-time"></span>
+                                     </span>
+                                </div>
+
+                                @if ($errors->has('deployment_start'))
+                                    <span class="help-block">
+                                        <strong>{{ $errors->first('deployment_start') }}</strong>
+                                    </span>
+                                @endif
+                            </div>
+                        </div>
+
+                        <div class="form-group{{ $errors->has('deployment_end') ? ' has-error' : '' }}">
+                            <label for="deployment_end" class="col-md-4 control-label">Ensatzendet</label>
+                            <div class="col-md-6">
+                                <div class="input-group" id="deployment-end-timepicker">
+                                    <input id="deployment_end" type="text" placeholder="17:20" class="form-control" name="deployment_end" value="{{ old('deployment_end',(new \Carbon\Carbon($deployment->deployment_end))->toTimeString() ) }}">
+                                    <span class="input-group-addon">
+                                        <span class="glyphicon glyphicon-time"></span>
+                                     </span>
+                                </div>
+
+
+                                @if ($errors->has('deployment_end'))
+                                    <span class="help-block">
+                                        <strong>{{ $errors->first('deployment_end') }}</strong>
+                                    </span>
+                                @endif
+                            </div>
+                        </div>
+
                         <div class="form-group{{ $errors->has('duration') ? ' has-error' : '' }}">
                             <label for="duration" class="col-md-4 control-label">Dauer</label>
                             <div class="col-md-6">
-                                <input id="duration" type="text" class="form-control" name="duration" value="{{ old('duration', $deployment->duration) }}">
+                                <input id="duration" type="text" readonly class="form-control" name="duration" value="{{ old('duration', $deployment->duration) }}">
 
                                 @if ($errors->has('duration'))
                                     <span class="help-block">

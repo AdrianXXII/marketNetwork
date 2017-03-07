@@ -41,13 +41,17 @@
                                 <tr>
                                     <th>Titel</th>
                                     <th>Einsatzdatum</th>
+                                    <th>Start</th>
+                                    <th>Ende</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 @foreach($deployments as $deployment)
                                     <tr class="clickable-row" data-href='{{ route('deployment.edit', ['id' => $deployment->id ]) }}'>
                                         <td>{{ $deployment->title }}</td>
-                                        <td>{{ $deployment->deployment_date }}</td>
+                                        <td>{{ (new \Carbon\Carbon($deployment->deployment_date))->toDateString() }}</td>
+                                        <td>{{ (new \Carbon\Carbon($deployment->deployment_date))->toTimeString() }}</td>
+                                        <td>{{ (new \Carbon\Carbon($deployment->deployment_end))->toTimeString() }}</td>
                                     </tr>
                                 @endforeach
                             </tbody>

@@ -27,7 +27,12 @@
                             <div class="form-group{{ $errors->has('start_date') ? ' has-error' : '' }}">
                                 <label for="start_date" class="col-md-4 control-label">Ort</label>
                                 <div class="col-md-6">
-                                    <input id="start_date" type="date" class="form-control" name="start_date" value="{{ old('start_date', (new \Carbon\Carbon($market->start_date))->todatestring()) }}">
+                                    <div class="input-group" id="market-start">
+                                        <input id="start_date" type="text" class="form-control" name="start_date" value="{{ old('start_date', (new \Carbon\Carbon($market->start_date))->toDateString()) }}">
+                                        <span class="input-group-addon">
+                                           <span class="glyphicon glyphicon-calendar"></span>
+                                        </span>
+                                    </div>
 
                                     @if ($errors->has('start_date'))
                                         <span class="help-block">
@@ -40,7 +45,12 @@
                             <div class="form-group{{ $errors->has('end_date') ? ' has-error' : '' }}">
                                 <label for="end_date" class="col-md-4 control-label">Ort</label>
                                 <div class="col-md-6">
-                                    <input id="end_date" type="date" class="form-control" name="end_date" value="{{ old('end_date', (new \Carbon\Carbon($market->end_date))->todatestring()) }}">
+                                    <div class="input-group" id="market-end">
+                                        <input id="end_date" type="text" class="form-control" name="end_date" value="{{ old('end_date', (new \Carbon\Carbon($market->end_date))->toDateString()) }}">
+                                        <span class="input-group-addon">
+                                           <span class="glyphicon glyphicon-calendar"></span>
+                                        </span>
+                                    </div>
 
                                     @if ($errors->has('end_date'))
                                         <span class="help-block">
@@ -114,7 +124,7 @@
                         </div>
                         <div class="row">
                             <div class="col-lg-10 col-lg-offset-1">
-                                <table class="table table-striped table-hover">
+                                <table class="table table-striped table-hover market-vendor">
                                     <tr>
                                         <th>Verkäufer</th>
                                         <th></th>

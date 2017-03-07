@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Deployment;
 use App\Http\Requests\StoreDeploymentPost;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Input;
 
@@ -49,8 +50,9 @@ class DeploymentController extends Controller
         $deployment->title            = $request->get('title');
         $deployment->employee         = $request->get('employee');
         $deployment->description      = $request->get('description');
-        $deployment->deployment_date  = $request->get('deployment_date');
-        $deployment->duration         = $request->get('duration');
+        $deployment->deployment_date  = new Carbon($request->get('deployment_date') . " " . $request->get('deployment_start'));
+        $deployment->deployment_end  =  new Carbon($request->get('deployment_date') . " " . $request->get('deployment_end'));
+        $deployment->duration         = $deployment->deployment_date->diffInMinutes($deployment->deployment_end) / 60;
         $deployment->cost             = $request->get('cost');
         $deployment->save();
 
@@ -93,8 +95,10 @@ class DeploymentController extends Controller
         $deployment = Deployment::find($id);
         $deployment->title            = $request->get('title');
         $deployment->description      = $request->get('description');
-        $deployment->deployment_date  = $request->get('deployment_date');
-        $deployment->duration         = $request->get('duration');
+        $deployment->employee         = $request->get('employee');
+        $deployment->deployment_date  = new Carbon($request->get('deployment_date') . " " . $request->get('deployment_start'));
+        $deployment->deployment_end   = new Carbon($request->get('deployment_date') . " " . $request->get('deployment_end'));
+        $deployment->duration         = $deployment->deployment_date->diffInMinutes($deployment->deployment_end) / 60;
         $deployment->cost             = $request->get('cost');
         $deployment->save();
 

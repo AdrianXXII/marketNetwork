@@ -12,6 +12,6 @@ class Deployment extends Model
     // Timestamp ausstellen
     public $timestamps = false;
 
-    protected $fillable = array('title', 'description', 'deployment_date', 'duration', 'cost');
+    protected $fillable = array('title', 'description', 'deployment_date', 'deployment_end', 'duration', 'cost');
 
 }
