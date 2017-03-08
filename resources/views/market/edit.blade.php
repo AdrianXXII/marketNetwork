@@ -124,21 +124,25 @@
                         </div>
                         <div class="row">
                             <div class="col-lg-10 col-lg-offset-1">
-                                <table class="table table-striped table-hover market-vendor">
-                                    <tr>
-                                        <th>Verkäufer</th>
-                                        <th></th>
-                                    </tr>
-                                    @foreach($market->members as $member)
-                                        <tr class="market-member-{{ $member->id }}" data-href="{{ route('marketMember.delete',['marketID' => $market->id, 'vendorId' => $member->id]) }}">
-                                            <td>{{  strlen($member->firstname) > 0 ? $member->firstname . ' ' . $member->name : $member->name }}</td>
-                                            <td>
-                                                <button type="button" class="btn btn-danger market-member-delete">
-                                                    <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
-                                                </button>
-                                            </td>
+                                <table class="table table-striped table-hover" id="market-vendor">
+                                    <thead>
+                                        <tr>
+                                            <th>Verkäufer</th>
+                                            <th></th>
                                         </tr>
-                                    @endforeach
+                                    </thead>
+                                    <tbody>
+                                        @foreach($market->members as $member)
+                                            <tr class="market-member-{{ $member->id }}" data-href="{{ route('marketMember.delete',['marketID' => $market->id, 'vendorId' => $member->id]) }}">
+                                                <td>{{  strlen($member->firstname) > 0 ? $member->name . ' ' . $member->firstname : $member->name }}</td>
+                                                <td>
+                                                    <button type="button" class="btn btn-danger market-member-delete">
+                                                        <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
+                                                    </button>
+                                                </td>
+                                            </tr>
+                                        @endforeach
+                                    </tbody>
                                 </table>
                             </div>
                         </div>

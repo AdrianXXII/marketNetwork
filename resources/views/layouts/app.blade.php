@@ -234,32 +234,33 @@
                 });
             });
 
-            $('.market-member-create').click(function(){
+            $('body').on('click','.market-member-create' ,function(){
                 var dHref = $(this).data("href") + "/" + $('#market-vendor').prop('value');
-                var lastTr = $('#market-vendor tbody tr').last();
                 console.log(dHref);
                 var sendData = {};
                 $.ajax({
                     url: dHref,
                     method: 'PUT',
                     success: function(data, textStatus, jqXHR){
-                        if(data.code = 1){
+                        if(data.code == 1){
                             var tdName = $(document.createElement('td'));
                             var tdDelete = $(document.createElement('td'));
                             var tr = $(document.createElement('tr'));
                             tr.data("href", dHref);
-                            tr.addClass(",arlet-member-"+ data.data.id );
-                            tdName.text = data.data.lastname + " " + data.data.lastname;
-                            tdDelete.innerHTML = "<button type='button' class='btn btn-danger market-member-delete'><span class='glyphicon glyphicon-trash' aria-hidden='true'></span></button>";
+                            tr.addClass("marlet-member-"+ data.data.id );
+                            tdName.text(data.data.name + " " + data.data.firstname);
+                            console.log(data.data);
+                            tdDelete.html("<button type='button' class='btn btn-danger market-member-delete'><span class='glyphicon glyphicon-trash' aria-hidden='true'></span></button>");
                             tr.append(tdName);
-                            tr.append(tdName);
-                            lastTr.after(tr);
+                            tr.append(tdDelete);
+                            $('#market-vendor tbody').append(tr);
+                            console.log(tr.html());
                         }
                     }
                 });
             });
 
-            $('.market-member-delete').click(function(){
+            $('body').on('click','.market-member-delete', function(){
                 var tr = $(this).parents('tr');
                 var dHref = tr.data("href");
                 var sendData = {};

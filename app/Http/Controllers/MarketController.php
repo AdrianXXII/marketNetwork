@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Location;
 use App\Market;
 use App\Member;
 use Carbon\Carbon;
@@ -67,7 +68,7 @@ class MarketController extends Controller
     public function edit($locationId, $id)
     {
         $market = Market::find($id);
-        $members = Member::with('locations')->where('id','=', $locationId)->get();
+        $members = Location::find($locationId)->members;
         return view('market.edit', compact('market', 'locationId', 'members'));
     }
 

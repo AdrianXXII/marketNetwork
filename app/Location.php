@@ -19,7 +19,7 @@ class Location extends Model
     }
 
     public function members(){
-        return $this->belongsToMany('App\Member');
+        return $this->belongsToMany('App\Member', 'location_members');
     }
 
 }
