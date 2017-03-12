@@ -152,6 +152,19 @@
                             </div>
                         </div>
 
+                        <div class="form-group vendor-only{{ $errors->has('abo_restart') ? ' has-error' : '' }}{{  $member->vendor != 1 ? ' hidden' : '' }}">
+                            <label for="abo_restart" class="col-md-4 control-label">Abo Ermeuern</label>
+                            <div class="col-md-6">
+                                <input id="abo_restart" type="checkbox" class="form-control member-vendor" {{  old('abo_restart') == 1 ? 'checked' : '' }} name="abo_restart" value="1">
+
+                                @if ($errors->has('abo_restart'))
+                                    <span class="help-block">
+                                        <strong>{{ $errors->first('abo_restart') }}</strong>
+                                    </span>
+                                @endif
+                            </div>
+                        </div>
+
                         <div class="form-group">
                             <div class="col-md-6 col-md-offset-4">
                                 <button type="submit" name="save" value="ok" class="btn btn-primary">

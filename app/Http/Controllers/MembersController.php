@@ -27,16 +27,26 @@ class MembersController extends Controller
     {
         $members = array();
         $search = Input::get('search', null);
-        if($search){
-            $members = Member::where('name', 'like', $search . "%")
-                ->orwhere('firstname', 'like', $search . "%")
-                ->orwhere('email', 'like', $search . "%")
-                ->orwhere('street', 'like', $search . "%")
-                ->orderBy('name')->orderBy('firstname')->get();
+        $vendor = Input::get('vendor', null);
+        $trial = Input::get('trial', null);
+        if($search || $vendor || $trial){
+            $query = Member::where(function($q) use($search){
+                return $q->where('name', 'like', $search . "%")
+                    ->orwhere('firstname', 'like', $search . "%")
+                    ->orwhere('email', 'like', $search . "%")
+                    ->orwhere('street', 'like', $search . "%");
+            });
+            if($vendor){
+                $query->where('vendor','=',1);
+            }
+            if($trial){
+                $query->where('trialperiode','=',1);
+            }
+            $members = $query->orderBy('name')->orderBy('firstname')->get();
         } else {
             $members = Member::orderBy('name')->orderBy('firstname')->get();
         }
-        return view('members.index', compact('members','search'));
+        return view('members.index', compact('members','search','vendor','trial'));
     }
 
     /**
@@ -120,11 +130,15 @@ class MembersController extends Controller
         $member->zip            = $request->get('zip');
         $member->city           = $request->get('city');
         $member->tel            = $request->get('tel');
+        $abo_restart            = $request->get('abo_restart') == null ? 0 : $request->get('abo_restart');
 
         $member->vendor         = $request->get('vendor') == null ? 0 : $request->get('vendor');
-        $member->trialperiode   = $request->get('trialperiode') == null ? 0 : $request->get('trialperiode');
+        $member->trialperiode   = $request->get('trialperiode') == null || $member->vendor == 0 ? 0 : $request->get('trialperiode');
         if( $member->vendor && $member->abo_id != $request->get('abo') ){
             $member->abo_id  = $request->get('abo');
+            $member->abo_start = new Carbon();
+        }
+        if($abo_restart && $member->vendor && $member->abo_id != null ){
             $member->abo_start = new Carbon();
         }
         $member->save();
@@ -133,6 +147,11 @@ class MembersController extends Controller
 
         foreach($member->locations as $location){
             if($i <= 0){
+                foreach($member->markets as $market){
+                    if($member->location_id = $location->id){
+                        $member->markets()->detach($market->id);
+                    }
+                }
                 $member->locations()->detach($location->id);
             }
             $i--;
@@ -153,8 +172,13 @@ class MembersController extends Controller
      */
     public function destroy($id)
     {
-        //
         $member = Member::find($id);
+        foreach($member->markets as $market){
+            $member->markets()->detach($market->id);
+        }
+        foreach($member->locations as $location){
+            $member->locations()->detach($location->id);
+        }
         $member->delete();
         return redirect(route('member.index'));
 

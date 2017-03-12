@@ -62,16 +62,23 @@
                                 </div>
                             </div>
 
-                            <div class="form-group{{ $errors->has('tel') ? ' has-error' : '' }}">
+                            <div class="form-group{{ $errors->has('member_max') ? ' has-error' : '' }}">
                                 <label for="member_max" class="col-md-4 control-label">Anzahl Plätze</label>
                                 <div class="col-md-6">
                                     <input id="member_max" type="text" class="form-control" name="member_max" value="{{ old('member_max', $location->member_max) }}">
 
                                     @if ($errors->has('member_max'))
                                         <span class="help-block">
-                                        <strong>{{ $errors->first('member_max') }}</strong>
-                                    </span>
+                                            <strong>{{ $errors->first('member_max') }}</strong>
+                                        </span>
                                     @endif
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="member_current" class="col-md-4 control-label">Anzahl besetzte Plätze</label>
+                                <div class="col-md-6">
+                                    <input id="member_current" type="text" readonly class="form-control" name="member_current" value="{{ count($location->members) }}">
                                 </div>
                             </div>
 

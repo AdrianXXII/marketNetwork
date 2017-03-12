@@ -18,6 +18,11 @@
                                                 </button>
                                             </span>
                                         </div>
+
+                                        <div class="form-inline">
+                                            <label class="checkbox-inline"><input {{ $vendor == 1 ? 'checked' : '' }} type="checkbox" name="vendor" value="1">Verkäufer</label>
+                                            <label class="checkbox-inline"><input {{ $trial == 1 ? 'checked' : '' }} type="checkbox" name="trial" value="1">Probezeit</label>
+                                        </div>
                                     </form>
                             </div>
                             <div class="col-lg-2 col-sm-2">

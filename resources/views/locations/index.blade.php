@@ -12,11 +12,11 @@
                                 <form action="{{ route('location.index') }}" method="get">
                                     <div class="input-group">
                                         <input type="text" class="form-control" name="search" placeholder="Suche nach...">
-                                            <span class="input-group-btn">
-                                                <button class="btn btn-default" aria-hidden="true" type="submit">
-                                                    <span class="glyphicon glyphicon-search" aria-hidden="true"></span>
-                                                </button>
-                                            </span>
+                                        <span class="input-group-btn">
+                                            <button class="btn btn-default" aria-hidden="true" type="submit">
+                                                <span class="glyphicon glyphicon-search" aria-hidden="true"></span>
+                                            </button>
+                                        </span>
                                     </div>
                                 </form>
                             </div>

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreLocationPost;
+use App\Http\Requests\UpdateLocationPut;
 use App\Location;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Input;
@@ -86,7 +87,7 @@ class LocationController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(StoreLocationPost $request, $id)
+    public function update(UpdateLocationPut $request, $id)
     {
         $location = Location::find($id);
         $location->name           = $request->get('name');
