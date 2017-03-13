@@ -6,6 +6,7 @@ use App\Deployment;
 use App\Http\Requests\StoreDeploymentPost;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Input;
 
 class DeploymentController extends Controller
@@ -15,17 +16,24 @@ class DeploymentController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
         $deployments = array();
-        $search = Input::get('search', null);
-        if($search){
-            $deployments = Deployment::where('title', 'like', $search . "%")
-                ->orderBy('deployment_date')->orderBy('title')->get();
+        $search = $request->get('search', null);
+        $date = $request->get('date', null);
+        if($search || $date){
+            $query = Deployment::where('title', 'like', $search . "%");
+            if($date){
+                $date = new Carbon($date);
+                $query->where(function($q) use ($date){
+                    $q->where(DB::raw('date(deployment_date)'), $date->toDateString());
+                });
+            }
+            $deployments  =  $query->orderBy('deployment_date')->orderBy('title')->get();
         } else {
             $deployments = Deployment::orderBy('deployment_date')->orderBy('title')->get();
         }
-        return view('deployments.index', compact('deployments','search'));
+        return view('deployments.index', compact('deployments','search','date'));
     }
 
     /**

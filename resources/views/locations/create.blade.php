@@ -63,7 +63,7 @@
                             </div>
 
                             <div class="form-group{{ $errors->has('member_max') ? ' has-error' : '' }}">
-                                <label for="tel" class="col-md-4 control-label">Anzahl Plätze</label>
+                                <label for="member_max" class="col-md-4 control-label">Anzahl Plätze</label>
                                 <div class="col-md-6">
                                     <input id="member_max" type="text" class="form-control" name="member_max" value="{{ old('member_max') }}">
 

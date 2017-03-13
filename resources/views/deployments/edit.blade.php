@@ -40,7 +40,7 @@
                         <div class="form-group{{ $errors->has('employee') ? ' has-error' : '' }}">
                             <label for="description" class="col-md-4 control-label">Mitarbeiter</label>
                             <div class="col-md-6">
-                                <input id="employee" type="text" class="form-control" name="employee" value="{{ old('employee', $deployment->employee  ) }}">
+                                <input id="employee" class="form-control" name="employee" value="{{ old('employee', $deployment->employee  ) }}">
 
                                 @if ($errors->has('employee'))
                                     <span class="help-block">

@@ -23,12 +23,12 @@ class MembersController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
         $members = array();
-        $search = Input::get('search', null);
-        $vendor = Input::get('vendor', null);
-        $trial = Input::get('trial', null);
+        $search = $request->get('search', null);
+        $vendor = $request->get('vendor', null);
+        $trial = $request->get('trial', null);
         if($search || $vendor || $trial){
             $query = Member::where(function($q) use($search){
                 return $q->where('name', 'like', $search . "%")

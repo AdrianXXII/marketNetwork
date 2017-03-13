@@ -15,10 +15,10 @@ class LocationController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
         $locations = array();
-        $search = Input::get('search', null);
+        $search = $request->get('search', null);
         if($search){
             $locations = Location::where('name', 'like', $search . "%")
                 ->orwhere('street', 'like', $search . "%")

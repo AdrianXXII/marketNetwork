@@ -20,6 +20,10 @@ jQuery(document).ready(function($) {
         format: 'LT'
     });
 
+    $('#deployment-search-date').datetimepicker({
+        format: 'YYYY-MM-DD'
+    });
+
     $('[name="vendor"].member-vendor').click(function(){
         $('.vendor-only').toggleClass('hidden');
         console.log('test');

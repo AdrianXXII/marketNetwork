@@ -8,15 +8,25 @@
                     <div class="panel-heading">Einsätze</div>
                     <div class="panel-body">
                         <div class="row">
-                            <div class="col-lg-6 col-sm-10">
+                            <div class="col-lg-8 col-sm-10">
                                     <form action="{{ route('deployment.index') }}" method="get">
-                                        <div class="input-group">
-                                            <input type="text" class="form-control" name="search" placeholder="Suche nach...">
-                                            <span class="input-group-btn">
-                                                <button class="btn btn-default" aria-hidden="true" type="submit">
-                                                    <span class="glyphicon glyphicon-search" aria-hidden="true"></span>
-                                                </button>
-                                            </span>
+                                        <div class="col-lg-6 col-sm-6">
+                                            <div class="input-group" id="deployment-search-date">
+                                                <input id="date" type="text" class="form-control" name="date" value="{{ $date != null ? (new Carbon\Carbon($date))->toDateString() : '' }}">
+                                                <span class="input-group-addon">
+                                                    <span class="glyphicon glyphicon-calendar"></span>
+                                                 </span>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-6 col-sm-6">
+                                            <div class="input-group">
+                                                <input type="text" class="form-control" name="search" placeholder="Suche nach...">
+                                                <span class="input-group-btn">
+                                                    <button class="btn btn-default" aria-hidden="true" type="submit">
+                                                        <span class="glyphicon glyphicon-search" aria-hidden="true"></span>
+                                                    </button>
+                                                </span>
+                                            </div>
                                         </div>
                                     </form>
                             </div>
@@ -50,8 +60,8 @@
                                     <tr class="clickable-row" data-href='{{ route('deployment.edit', ['id' => $deployment->id ]) }}'>
                                         <td>{{ $deployment->title }}</td>
                                         <td>{{ (new \Carbon\Carbon($deployment->deployment_date))->toDateString() }}</td>
-                                        <td>{{ (new \Carbon\Carbon($deployment->deployment_date))->toTimeString() }}</td>
-                                        <td>{{ (new \Carbon\Carbon($deployment->deployment_end))->toTimeString() }}</td>
+                                        <td>{{ (new \Carbon\Carbon($deployment->deployment_date))->format('H:i') }}</td>
+                                        <td>{{ (new \Carbon\Carbon($deployment->deployment_end))->format('H:i') }}</td>
                                     </tr>
                                 @endforeach
                             </tbody>
