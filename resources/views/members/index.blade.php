@@ -5,7 +5,7 @@
         <div class="row">
             <div class="col-md-12">
                 <div class="panel panel-default">
-                    <div class="panel-heading">Adressen</div>
+                    <div class="panel-heading">Mitglieder</div>
                     <div class="panel-body">
                         <div class="row">
                             <div class="col-lg-6 col-sm-10">
@@ -48,8 +48,9 @@
                                     <th>Vorname</th>
                                     <th>Strasse</th>
                                     <th>Ortschaft</th>
-                                    <th>Tel</th>
+                                    <th>Telefonnummer</th>
                                     <th>Email</th>
+                                    <th></th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -61,6 +62,15 @@
                                         <td>{{ $member->zip . " " . $member->city }}</td>
                                         <td>{{ $member->tel }}</td>
                                         <td>{{ $member->email }}</td>
+                                        <td>
+                                            <form method="post" action="{{ route('member.delete', ['id' => $member->id]) }}">
+                                                {{ csrf_field() }}
+                                                <input type="hidden" name="_method" value="DELETE">
+                                                <button type="submit" class="btn btn-danger center-block">
+                                                    <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
+                                                </button>
+                                            </form>
+                                        </td>
                                     </tr>
                                 @endforeach
                             </tbody>

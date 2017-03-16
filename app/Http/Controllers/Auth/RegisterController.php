@@ -48,9 +48,19 @@ class RegisterController extends Controller
     protected function validator(array $data)
     {
         return Validator::make($data, [
-            'name' => 'required|max:255',
-            'email' => 'required|email|max:255|unique:users',
+            'name' => 'required|max:50',
+            'email' => 'required|email|max:50|unique:users',
             'password' => 'required|min:6|confirmed',
+        ], [
+            'name.required' => 'Sie müssen einen Namen angeben!',
+            'name.max' => 'Der Name ist zu lang',
+            'email.required' => 'Sie müssen eine E-Mail Adresse angeben!',
+            'email.unique' => 'Die E-Mail Adresse kann nicht gebraucht werden',
+            'email.email' => 'Die E-Mail Adresse muss eine valide E-Mail Adresse sein',
+            'email.max' => 'Die E-Mail Adresse ist zu lang',
+            'password.required' => 'Sie müssen ein Passwort angeben',
+            'password.confirmed' => 'Die Passwörter stimmen nicht überein',
+            'password.min' => 'Das Passwort muss mindestens Zeichen lang sein',
         ]);
     }
 

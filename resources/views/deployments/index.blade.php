@@ -12,7 +12,7 @@
                                     <form action="{{ route('deployment.index') }}" method="get">
                                         <div class="col-lg-6 col-sm-6">
                                             <div class="input-group" id="deployment-search-date">
-                                                <input id="date" type="text" class="form-control" name="date" value="{{ $date != null ? (new Carbon\Carbon($date))->toDateString() : '' }}">
+                                                <input id="date" type="text" class="form-control" name="date" value="{{ $date != null ? (new Carbon\Carbon($date))->format('d.m.Y') : '' }}">
                                                 <span class="input-group-addon">
                                                     <span class="glyphicon glyphicon-calendar"></span>
                                                  </span>
@@ -53,15 +53,25 @@
                                     <th>Einsatzdatum</th>
                                     <th>Start</th>
                                     <th>Ende</th>
+                                    <th></th>
                                 </tr>
                             </thead>
                             <tbody>
                                 @foreach($deployments as $deployment)
                                     <tr class="clickable-row" data-href='{{ route('deployment.edit', ['id' => $deployment->id ]) }}'>
                                         <td>{{ $deployment->title }}</td>
-                                        <td>{{ (new \Carbon\Carbon($deployment->deployment_date))->toDateString() }}</td>
+                                        <td>{{ (new \Carbon\Carbon($deployment->deployment_date))->format('d.m.y') }}</td>
                                         <td>{{ (new \Carbon\Carbon($deployment->deployment_date))->format('H:i') }}</td>
                                         <td>{{ (new \Carbon\Carbon($deployment->deployment_end))->format('H:i') }}</td>
+                                        <td>
+                                            <form method="post" action="{{ route('deployment.delete', ['id' => $deployment->id]) }}">
+                                                {{ csrf_field() }}
+                                                <input type="hidden" name="_method" value="DELETE">
+                                                <button type="submit" class="btn btn-danger center-block">
+                                                    <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
+                                                </button>
+                                            </form>
+                                        </td>
                                     </tr>
                                 @endforeach
                             </tbody>

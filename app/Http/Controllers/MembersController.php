@@ -10,6 +10,7 @@ use App\Member;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Input;
+use Illuminate\Support\Facades\Log;
 
 class MembersController extends Controller
 {
@@ -29,6 +30,10 @@ class MembersController extends Controller
         $search = $request->get('search', null);
         $vendor = $request->get('vendor', null);
         $trial = $request->get('trial', null);
+        Log::info("Search $search");
+        Log::info("Vendor $vendor");
+        Log::info("Trial $trial");
+        Log::info("URL: " . $request->fullUrl());
         if($search || $vendor || $trial){
             $query = Member::where(function($q) use($search){
                 return $q->where('name', 'like', $search . "%")
@@ -77,10 +82,12 @@ class MembersController extends Controller
         $member->zip            = $request->get('zip');
         $member->city           = $request->get('city');
         $member->tel            = $request->get('tel');
-        $member->abo_id         = $request->get('abo');
+
 
         $member->vendor         = $request->get('vendor') == null ? 0 : $request->get('vendor');
         if( $member->vendor ){
+            $member->abo_id         = $request->get('abo');
+            $member->abo_start      = new Carbon();
             $member->trialperiode   = true;
         }
         $member->save();

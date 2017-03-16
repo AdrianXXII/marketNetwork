@@ -2,9 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\StoreMarketPost;
 use App\Location;
 use App\Market;
-use App\Member;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 
@@ -36,14 +36,13 @@ class MarketController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request, $locationId)
+    public function store(StoreMarketPost $request, $locationId)
     {
         $market = new Market();
         $market->location_id = $locationId;
         $market->name = $request->get('name');
-        $market->start_date = new Carbon($request->get('start_date'));
-        $market->end_date = new Carbon($request->get('end_date'));
-        $market->available = $request->get('available') == 1 ? 1 : 0;;
+        $market->start_date = Carbon::createFromFormat('d.m.Y', $request->get('start_date'));
+        $market->end_date = Carbon::createFromFormat('d.m.Y', $request->get('end_date'));
         $market->save();
 
         return redirect(route('location.edit', ['id' => $locationId]));
@@ -79,13 +78,12 @@ class MarketController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $locationId, $id)
+    public function update(StoreMarketPost $request, $locationId, $id)
     {
         $market = Market::find($id);
         $market->name = $request->get('name');
-        $market->start_date = new Carbon($request->get('start_date'));
-        $market->end_date = new Carbon($request->get('end_date'));
-        $market->available = $request->get('available') == 1 ? 1 : 0;
+        $market->start_date = Carbon::createFromFormat('d.m.Y',$request->get('start_date'));
+        $market->end_date = Carbon::createFromFormat('d.m.Y', $request->get('end_date'));
         $market->save();
 
         return redirect(route('location.edit', ['id' => $locationId]));

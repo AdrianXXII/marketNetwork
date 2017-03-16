@@ -53,14 +53,14 @@ class LocationMemberController extends Controller
             $message->code = self::CODE_IN_USE;
             $message->message = "Der Verkäufer ist in einem Mackt eingetragen";
 
-        } else if($location->limit <= count($location->members) ){
+        } else if($location->limit > 0 && count($location->members) > 0 && $location->limit <= count($location->members) ){
             $message->code = self::CODE_NO_ROOM;
             $message->message = "Der Standort hat keinen Platz mehr";
 
         } else {
             $message->code = self::CODE_OKAY;
             $message->message = "Standort erfolgreich erfasst";
-            $location->members()->attach($locationId);
+            $location->members()->attach($vendor->id);
         }
 
         return response()->json($message);

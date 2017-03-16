@@ -5,7 +5,7 @@
     <div class="row">
         <div class="col-md-12">
             <div class="panel panel-default">
-                <div class="panel-heading">Adressen</div>
+                <div class="panel-heading">Einsatz</div>
                 <div class="panel-body">
                     <form class="form-horizontal" method="POST" action="{{ route('deployment.update', ['id' => $deployment->id ]) }}">
                         {{ csrf_field() }}
@@ -54,7 +54,7 @@
                             <label for="deployment_date" class="col-md-4 control-label">Einsatzdatum</label>
                             <div class="col-md-6">
                                 <div class="input-group" id="deployment-date-datepicker">
-                                    <input id="deployment_date" type="text" placeholder="2017-03-25" class="form-control" name="deployment_date" value="{{ old('deployment_end', (new \Carbon\Carbon($deployment->deployment_date))->toDateString()  ) }}">
+                                    <input id="deployment_date" type="text" placeholder="2017-03-25" class="form-control" name="deployment_date" value="{{ old('deployment_end', (new \Carbon\Carbon($deployment->deployment_date))->format('d.m.y')  ) }}">
                                     <span class="input-group-addon">
                                         <span class="glyphicon glyphicon-calendar"></span>
                                      </span>
@@ -141,19 +141,6 @@
                                 </a>
                             </div>
                         </div>
-
-                    </form>
-                    <hr/>
-                    <div class="center-block">
-                        <form method="post" action="{{ route('deployment.delete', ['id' => $deployment->id]) }}">
-                            {{ csrf_field() }}
-                            <input type="hidden" name="_method" value="DELETE">
-                            <button type="submit" class="btn btn-danger center-block">
-                                <span class="glyphicon glyphicon-trash" aria-hidden="true"></span> Löschen
-                            </button>
-                        </form>
-                    </div>
-
                     </form>
                 </div>
             </div>

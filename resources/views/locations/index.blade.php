@@ -42,6 +42,7 @@
                                 <th>Name</th>
                                 <th>Strasse</th>
                                 <th>Ortschaft</th>
+                                <th></th>
                             </tr>
                             </thead>
                             <tbody>
@@ -50,6 +51,15 @@
                                     <td>{{ $location->name }}</td>
                                     <td>{{ $location->street }}</td>
                                     <td>{{ $location->zip . " " . $location->city }}</td>
+                                    <td>
+                                        <form method="post" action="{{ route('location.delete', ['id' => $location->id]) }}">
+                                            {{ csrf_field() }}
+                                            <input type="hidden" name="_method" value="DELETE">
+                                            <button type="submit" class="btn btn-danger center-block">
+                                                <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
+                                            </button>
+                                        </form>
+                                    </td>
                                 </tr>
                             @endforeach
                             </tbody>

@@ -5,7 +5,7 @@
         <div class="row">
             <div class="col-md-12">
                 <div class="panel panel-default">
-                    <div class="panel-heading">Standort</div>
+                    <div class="panel-heading">Markt</div>
                     <div class="panel-body">
                         <form class="form-horizontal" method="POST" action="{{ route('market.save', ['locationId' => $locationId]) }}">
                             {{ csrf_field() }}
@@ -24,7 +24,7 @@
                             </div>
 
                             <div class="form-group{{ $errors->has('start_date') ? ' has-error' : '' }}">
-                                <label for="start_date" class="col-md-4 control-label">Start</label>
+                                <label for="start_date" class="col-md-4 control-label">Beginn</label>
                                 <div class="col-md-6">
                                     <div class="input-group" id="market-start">
                                         <input id="start_date" type="text" class="form-control" name="start_date" value="{{ old('start_date') }}">
@@ -42,7 +42,7 @@
                             </div>
 
                             <div class="form-group{{ $errors->has('end_date') ? ' has-error' : '' }}">
-                                <label for="end_date" class="col-md-4 control-label">End</label>
+                                <label for="end_date" class="col-md-4 control-label">Ende</label>
                                 <div class="col-md-6">
                                     <div class="input-group" id="market-end">
                                         <input id="end_date" type="text" class="form-control" name="end_date" value="{{ old('end_date') }}">
@@ -54,19 +54,6 @@
                                     @if ($errors->has('end_date'))
                                         <span class="help-block">
                                         <strong>{{ $errors->first('end_date') }}</strong>
-                                    </span>
-                                    @endif
-                                </div>
-                            </div>
-
-                            <div class="form-group{{ $errors->has('available') ? ' has-error' : '' }}">
-                                <label for="available" class="col-md-4 control-label">Verfügen</label>
-                                <div class="col-md-6">
-                                    <input id="available" type="text" class="form-control" name="available" {{ old('available') == 1 ? 'checked' : '' }} value="1">
-
-                                    @if ($errors->has('available'))
-                                        <span class="help-block">
-                                        <strong>{{ $errors->first('available') }}</strong>
                                     </span>
                                     @endif
                                 </div>

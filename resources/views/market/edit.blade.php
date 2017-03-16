@@ -5,7 +5,7 @@
         <div class="row">
             <div class="col-md-12">
                 <div class="panel panel-default">
-                    <div class="panel-heading">Standort</div>
+                    <div class="panel-heading">Markt</div>
                     <div class="panel-body">
                         <form class="form-horizontal" method="POST" action="{{ route('market.update', ['locationId' => $locationId, 'id' => $market->id]) }}">
                             {{ csrf_field() }}
@@ -25,10 +25,10 @@
                             </div>
 
                             <div class="form-group{{ $errors->has('start_date') ? ' has-error' : '' }}">
-                                <label for="start_date" class="col-md-4 control-label">Ort</label>
+                                <label for="start_date" class="col-md-4 control-label">Beginn</label>
                                 <div class="col-md-6">
                                     <div class="input-group" id="market-start">
-                                        <input id="start_date" type="text" class="form-control" name="start_date" value="{{ old('start_date', (new \Carbon\Carbon($market->start_date))->toDateString()) }}">
+                                        <input id="start_date" type="text" class="form-control" name="start_date" value="{{ old('start_date', (new \Carbon\Carbon($market->start_date))->format('d.m.y')) }}">
                                         <span class="input-group-addon">
                                            <span class="glyphicon glyphicon-calendar"></span>
                                         </span>
@@ -43,10 +43,10 @@
                             </div>
 
                             <div class="form-group{{ $errors->has('end_date') ? ' has-error' : '' }}">
-                                <label for="end_date" class="col-md-4 control-label">Ort</label>
+                                <label for="end_date" class="col-md-4 control-label">Ende</label>
                                 <div class="col-md-6">
                                     <div class="input-group" id="market-end">
-                                        <input id="end_date" type="text" class="form-control" name="end_date" value="{{ old('end_date', (new \Carbon\Carbon($market->end_date))->toDateString()) }}">
+                                        <input id="end_date" type="text" class="form-control" name="end_date" value="{{ old('end_date', (new \Carbon\Carbon($market->end_date))->format('d.m.y')) }}">
                                         <span class="input-group-addon">
                                            <span class="glyphicon glyphicon-calendar"></span>
                                         </span>
@@ -55,19 +55,6 @@
                                     @if ($errors->has('end_date'))
                                         <span class="help-block">
                                         <strong>{{ $errors->first('end_date') }}</strong>
-                                    </span>
-                                    @endif
-                                </div>
-                            </div>
-
-                            <div class="form-group{{ $errors->has('available') ? ' has-error' : '' }}">
-                                <label for="available" class="col-md-4 control-label">Verfügen</label>
-                                <div class="col-md-6">
-                                    <input id="available" type="checkbox" class="form-control" name="available" {{ old('available', $market->available) == 1 ? 'checked' : '' }} value="1">
-
-                                    @if ($errors->has('available'))
-                                        <span class="help-block">
-                                        <strong>{{ $errors->first('available') }}</strong>
                                     </span>
                                     @endif
                                 </div>
@@ -84,16 +71,6 @@
                                 </div>
                             </div>
                         </form>
-                        <hr/>
-                        <div class="center-block">
-                            <form method="post" action="{{ route('market.delete', ['id' => $market->id, 'locationId' => $locationId]) }}">
-                                {{ csrf_field() }}
-                                <input type="hidden" name="_method" value="DELETE">
-                                <button type="submit" class="btn btn-danger center-block">
-                                    <span class="glyphicon glyphicon-trash" aria-hidden="true"></span> Löschen
-                                </button>
-                            </form>
-                        </div>
                     </div>
                 </div>
             </div>
@@ -136,7 +113,7 @@
                                             <tr class="market-member-{{ $member->id }}" data-href="{{ route('marketMember.delete',['marketID' => $market->id, 'vendorId' => $member->id]) }}">
                                                 <td>{{  strlen($member->firstname) > 0 ? $member->name . ' ' . $member->firstname : $member->name }}</td>
                                                 <td>
-                                                    <button type="button" class="btn btn-danger market-member-delete">
+                                                    <button type="button" class="btn btn-danger pull-right market-member-delete">
                                                         <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
                                                     </button>
                                                 </td>

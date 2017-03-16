@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class StoreMemberPost extends FormRequest
+class StoreMarketPost extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -26,13 +26,10 @@ class StoreMemberPost extends FormRequest
             'name.required' => 'Sie müssen einen Namen angeben!',
             'name.max' => 'Der Name darf nicht länger sein als 30 Zeichen!',
             'name.min' => 'Der Name darf nicht kürzer sein als 2 Zeichen!',
-            'zip.required' => 'Sie müssen eine PLZ angeben!',
-            'city.required' => 'Sie müssen einen Ort angeben!',
-            'street.required' => 'Sie müssen eine Strasse angeben!',
-            'street.max' => 'Die Strasse darf nicht länger sein als 50 Zeichen!',
-            'street.min' => 'Die Strasse darf nicht kürzer sein als 2 Zeichen!',
-            'email.email' => 'Die angegebene E-Mailadresse ist nicht valid',
-            'abo.required_with' => 'Bei einem Verkäufer müssen Sie ein Abo wählen'
+            'start_date.required' => 'Sie müssen einen Beginn angeben!',
+            'end_date.required' => 'Sie müssen ein Ende angeben!',
+            'start_date.date' => 'Der Beginn muss ein Datum sein!',
+            'end_date.date' => 'Das Ende muss ein Datum sein!'
         ];
     }
 
@@ -45,11 +42,8 @@ class StoreMemberPost extends FormRequest
     {
         return [
             'name' => 'required|max:30|min:2',
-            'street' => 'required|max:50|min:2',
-            'city' => 'required',
-            'zip' => 'required',
-            'email' => 'email',
-            'abo' => 'required_with:vendor'
+            'start_date' => 'required|date',
+            'end_date' => 'required|date'
         ];
     }
 }

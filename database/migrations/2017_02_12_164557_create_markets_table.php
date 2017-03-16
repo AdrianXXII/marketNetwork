@@ -19,7 +19,6 @@ class CreateMarketsTable extends Migration
             $table->string("name", 30);
             $table->timestamp("start_date")->nullable();
             $table->timestamp("end_date")->nullable();
-            $table->boolean("available");
 
             $table->foreign('location_id')->references('id')->on('locations');
         });

@@ -5,7 +5,7 @@
     <div class="row">
         <div class="col-md-12">
             <div class="panel panel-default">
-                <div class="panel-heading">Adressen</div>
+                <div class="panel-heading">Mitglieder</div>
                 <div class="panel-body">
                     <form class="form-horizontal" method="POST" action="{{ route('member.update', ['id' => $member->id ]) }}">
                         {{ csrf_field() }}
@@ -153,7 +153,7 @@
                         </div>
 
                         <div class="form-group vendor-only{{ $errors->has('abo_restart') ? ' has-error' : '' }}{{  $member->vendor != 1 ? ' hidden' : '' }}">
-                            <label for="abo_restart" class="col-md-4 control-label">Abo Ermeuern</label>
+                            <label for="abo_restart" class="col-md-4 control-label">Abo erneuern</label>
                             <div class="col-md-6">
                                 <input id="abo_restart" type="checkbox" class="form-control member-vendor" {{  old('abo_restart') == 1 ? 'checked' : '' }} name="abo_restart" value="1">
 
@@ -168,9 +168,6 @@
                         <div class="form-group">
                             <div class="col-md-6 col-md-offset-4">
                                 <button type="submit" name="save" value="ok" class="btn btn-primary">
-                                    <span class="glyphicon glyphicon-floppy-disk" aria-hidden="true"></span> OK
-                                </button>
-                                <button type="submit" name="save" value="save" class="btn btn-info">
                                     <span class="glyphicon glyphicon-floppy-disk" aria-hidden="true"></span> Speichern
                                 </button>
                                 <a href="{{ route('member.index') }}" class="btn btn-default">
@@ -178,18 +175,7 @@
                                 </a>
                             </div>
                         </div>
-
                     </form>
-                    <hr/>
-                    <div class="center-block">
-                        <form method="post" action="{{ route('member.delete', ['id' => $member->id]) }}">
-                            {{ csrf_field() }}
-                            <input type="hidden" name="_method" value="DELETE">
-                            <button type="submit" class="btn btn-danger center-block">
-                                <span class="glyphicon glyphicon-trash" aria-hidden="true"></span> Löschen
-                            </button>
-                        </form>
-                    </div>
                 </div>
             </div>
         </div>
@@ -198,15 +184,16 @@
     <div class="row">
         <div class="col-md-12">
             <div class="panel panel-default">
-                <div class="panel-heading">
-                    Visa
-                </div>
-                <div class="panel-body">
-                    <div class="col-lg-2 col-sm-2">
+                <div class="panel-heading clearfix">
+                    <div class="panel-title pull-left">Visa</div>
+                    <div class="pull-right">
                         <button type="button" data-href="{{ route('visa.create', ['memberId' => $member->id]) }}" class="btn btn-primary visa_create">
-                            <span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Add Visa
+                            <span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Neu
                         </button>
                     </div>
+                </div>
+                <div class="panel-body">
+
                     <table id="visas" class="table table-striped">
                         <thead>
                             <tr>
@@ -247,7 +234,8 @@
     <div class="row">
         <div class="col-md-12">
             <div class="panel panel-default">
-                <div class="panel-heading">Standorte (Anzahl: {{ $member->abo->limit }})</div>
+                <div class="panel-heading">
+                    Standorte (Anzahl: {{ $member->abo->limit }})</div>
                 <div class="panel-body">
                     <table class="table table-stripped">
 

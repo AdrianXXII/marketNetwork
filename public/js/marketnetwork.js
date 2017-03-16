@@ -13,15 +13,15 @@ jQuery(document).ready(function($) {
     });
 
     $('#market-start, #market-end, #deployment-date-datepicker').datetimepicker({
-        format: 'YYYY-MM-DD'
+        format: 'DD.MM.YYYY'
     });
 
     $('#deployment-end-timepicker, #deployment-star-timepicker').datetimepicker({
-        format: 'LT'
+        format: 'HH:mm'
     });
 
     $('#deployment-search-date').datetimepicker({
-        format: 'YYYY-MM-DD'
+        format: 'DD.MM.YYYY'
     });
 
     $('[name="vendor"].member-vendor').click(function(){

@@ -18,10 +18,10 @@ class CreateDeploymentsTable extends Migration
             $table->string('title',30);
             $table->string('employee',50)->nullable();
             $table->text('description')->nullable();
-            $table->timestamp("deployment_date");
-            $table->timestamp("deployment_end");
-            $table->decimal("duration",10,2);
-            $table->decimal("cost",10,2);
+            $table->timestamp("deployment_date")->nullable();
+            $table->timestamp("deployment_end")->nullable();
+            $table->decimal("duration",10,2)->nullable();
+            $table->decimal("cost",10,2)->nullable();
         });
     }
 

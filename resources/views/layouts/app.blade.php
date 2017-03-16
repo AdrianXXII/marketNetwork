@@ -47,7 +47,7 @@
                 <div class="collapse navbar-collapse" id="app-navbar-collapse">
                     <!-- Left Side Of Navbar -->
                     <ul class="nav navbar-nav">
-                        <li><a href="{{ route('member.index') }}">Adressen</a></li>
+                        <li><a href="{{ route('member.index') }}">Mitglieder</a></li>
                         <li><a href="{{ route('location.index') }}">Standorte</a></li>
                         <li><a href="{{ route('deployment.index') }}">Einsätze</a></li>
                     </ul>

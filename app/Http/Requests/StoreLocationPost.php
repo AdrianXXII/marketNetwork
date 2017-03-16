@@ -32,6 +32,7 @@ class StoreLocationPost extends FormRequest
             'zip.required' => 'Sie müssen einen PLZ angeben!',
             'zip.max' => 'Die PLZ darf nicht länger sein als 10 Zeichen!',
             'zip.min' => 'Die PLZ darf nicht kürzer sein als 2 Zeichen!',
+            'member_max.required' => 'Sie müssen die Anzahl Plätze angeben.',
             'member_max.digits_between' => 'Die Anzahl Plätze muss zwischen 1 und 500 liegen'
         ];
     }

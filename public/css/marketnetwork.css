@@ -9,3 +9,7 @@
     width: 100%;
     z-index: 999;
 }
+
+input[type=checkbox].form-control {
+    height: 26px;
+}

@@ -5,7 +5,7 @@
         <div class="row">
             <div class="col-md-12">
                 <div class="panel panel-default">
-                    <div class="panel-heading">Adressen</div>
+                    <div class="panel-heading">Standort</div>
                     <div class="panel-body">
                         <form class="form-horizontal" method="POST" action="{{ route('location.update', ['id' => $location->id ]) }}">
                             {{ csrf_field() }}
@@ -92,18 +92,7 @@
                                     </a>
                                 </div>
                             </div>
-
                         </form>
-                        <hr/>
-                        <div class="center-block">
-                            <form method="post" action="{{ route('location.delete', ['id' => $location->id]) }}">
-                                {{ csrf_field() }}
-                                <input type="hidden" name="_method" value="DELETE">
-                                <button type="submit" class="btn btn-danger center-block">
-                                    <span class="glyphicon glyphicon-trash" aria-hidden="true"></span> Löschen
-                                </button>
-                            </form>
-                        </div>
                     </div>
                 </div>
             </div>
@@ -112,27 +101,41 @@
         <div class="row">
             <div class="col-md-12">
                 <div class="panel panel-default">
-                    <div class="panel-heading">Märkte</div>
-                    <div class="panel-body">
-                        <div class="col-lg-2 col-sm-2">
+                    <div class="panel-heading clearfix">
+                        <div class="panel-title pull-left">
+                            Märkte
+                        </div>
+                        <div class="pull-right">
                             <a href="{{ route('market.create', ['id' => $location->id]) }}" class="btn btn-primary">
                                 <span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Neu
                             </a>
                         </div>
+                    </div>
+                    <div class="panel-body">
                         <table class="table table-striped">
                             <thead>
                                 <tr>
-                                    <th>Market</th>
-                                    <th>Start</th>
-                                    <th>End</th>
+                                    <th>Markt</th>
+                                    <th>Beginn</th>
+                                    <th>Ende</th>
+                                    <th></th>
                                 </tr>
                             </thead>
                             <tbody>
                                 @foreach($location->markets as $market)
                                     <tr class="clickable-row" data-href='{{ route('market.edit', ['locationId' => $location->id, 'id' => $market->id ]) }}'>
                                         <td>{{ $market->name }}</td>
-                                        <td>{{ (new \Carbon\Carbon($market->start_date))->todatestring() }}</td>
-                                        <td>{{ (new \Carbon\Carbon($market->end_date))->todatestring() }}</td>
+                                        <td>{{ (new \Carbon\Carbon($market->start_date))->format('d.m.y') }}</td>
+                                        <td>{{ (new \Carbon\Carbon($market->end_date))->format('d.m.y') }}</td>
+                                        <td>
+                                            <form method="post" action="{{ route('market.delete', ['id' => $market->id, 'locationId' => $location->id]) }}">
+                                                {{ csrf_field() }}
+                                                <input type="hidden" name="_method" value="DELETE">
+                                                <button type="submit" class="btn btn-danger center-block">
+                                                    <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
+                                                </button>
+                                            </form>
+                                        </td>
                                     </tr>
                                 @endforeach
                             </tbody>

@@ -58,8 +58,8 @@ class DeploymentController extends Controller
         $deployment->title            = $request->get('title');
         $deployment->employee         = $request->get('employee');
         $deployment->description      = $request->get('description');
-        $deployment->deployment_date  = new Carbon($request->get('deployment_date') . " " . $request->get('deployment_start'));
-        $deployment->deployment_end  =  new Carbon($request->get('deployment_date') . " " . $request->get('deployment_end'));
+        $deployment->deployment_date  = Carbon::createFromFormat('d.m.Y H:i', $request->get('deployment_date') . " " . $request->get('deployment_start'));
+        $deployment->deployment_end  =  Carbon::createFromFormat('d.m.Y H:i', $request->get('deployment_date') . " " . $request->get('deployment_end'));
         $deployment->duration         = $deployment->deployment_date->diffInMinutes($deployment->deployment_end) / 60;
         $deployment->cost             = $request->get('cost');
         $deployment->save();
@@ -104,8 +104,8 @@ class DeploymentController extends Controller
         $deployment->title            = $request->get('title');
         $deployment->description      = $request->get('description');
         $deployment->employee         = $request->get('employee');
-        $deployment->deployment_date  = new Carbon($request->get('deployment_date') . " " . $request->get('deployment_start'));
-        $deployment->deployment_end   = new Carbon($request->get('deployment_date') . " " . $request->get('deployment_end'));
+        $deployment->deployment_date  = Carbon::createFromFormat('d.m.Y H:i', $request->get('deployment_date') . " " . $request->get('deployment_start'));
+        $deployment->deployment_end   = Carbon::createFromFormat('d.m.Y H:i', $request->get('deployment_date') . " " . $request->get('deployment_end'));
         $deployment->duration         = $deployment->deployment_date->diffInMinutes($deployment->deployment_end) / 60;
         $deployment->cost             = $request->get('cost');
         $deployment->save();

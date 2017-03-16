@@ -5,7 +5,7 @@
     <div class="row">
         <div class="col-md-12">
             <div class="panel panel-default">
-                <div class="panel-heading">Adressen</div>
+                <div class="panel-heading">Mitglieder</div>
                 <div class="panel-body">
                     <form class="form-horizontal" method="POST" action="{{ route('member.save') }}">
                         {{ csrf_field() }}
@@ -104,7 +104,7 @@
                         <div class="form-group{{ $errors->has('vendor') ? ' has-error' : '' }}">
                             <label for="vendor" class="col-md-4 control-label">Verkäufer</label>
                             <div class="col-md-6">
-                                <input id="vendor" type="checkbox" class="form-control member-vendor" name="vendor" value="{{ old('vendor') }}">
+                                <input id="vendor" type="checkbox" class="form-control member-vendor" {{  old('vendor', $member->vendor) == 1 ? 'checked' : '' }} name="vendor" value="1">
 
                                 @if ($errors->has('vendor'))
                                     <span class="help-block">
